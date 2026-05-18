@@ -16,10 +16,17 @@
         h1 {
             text-align: center;
             color: #333;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
 
-        /* ПОВЕРНУЛИ СТИЛІ СІТКИ (Контейнер тепер працює правильно) */
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        /* Контейнер для карток (Гарна сітка) */
         .voting-container {
             display: flex;
             flex-wrap: wrap;
@@ -29,47 +36,158 @@
             margin: 0 auto;
         }
 
-        /* Стилі картки */
+        /* Стилі інтерактивної картки */
         .vote-item {
             background: #fff;
             border: 1px solid #e1e4e8;
-            border-radius: 12px;
-            padding: 12px;
+            border-radius: 16px;
+            padding: 16px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             max-width: 350px; 
             width: 100%;
             box-sizing: border-box;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Ефект при наведенні для інтерактивності */
+        /* Ефект наведення */
         .vote-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Зображення Козака (згенероване ШІ) */
+        .kozak-img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 12px;
+            background-color: #eaeaea; /* Тимчасовий фон, поки немає картинки */
+            margin-bottom: 15px;
+        }
+
+        /* Текстовий блок картки */
+        .kozak-info {
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+
+        .kozak-title {
+            margin: 0 0 10px 0;
+            font-size: 1.3rem;
+            color: #222;
+        }
+
+        .kozak-desc {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Стильний список ідей всередині картки */
+        .kozak-list {
+            margin: 10px 0 0 0;
+            padding-left: 20px;
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        .kozak-list li {
+            margin-bottom: 4px;
+        }
+
+        /* Кнопка голосування (Стиль бренду Facebook) */
+        .vote-btn {
+            display: block;
+            text-align: center;
+            background-color: #1877f2;
+            color: #ffffff;
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.2s ease;
+            box-shadow: 0 2px 6px rgba(24, 119, 242, 0.3);
+        }
+
+        .vote-btn:hover {
+            background-color: #166fe5;
+        }
+
+        .vote-btn:active {
+            background-color: #1466d6;
         }
     </style>
 </head>
 <body>
 
-    <h1>Оберіть свого Козака (Голосування)</h1>
+    <h1>⚔️ Ласкаво просимо до Козацької Ради!</h1>
+    <p class="subtitle">Тут народжуються нові козацькі меми, жарти та відео. Оберіть свого Козака!</p>
 
     <div class="voting-container">
 
         <div class="vote-item">
-            <div class="fb-post" 
-                 data-href="https://www.facebook.com/permalink.php?story_fbid=pfbid0dYLUenoVmDqyMbWenj3mSHiokYjdL6QbqGH2sYwZ2fuVkja2Wfhpu5L4doPVk7jCl&id=61589720438503" 
-                 data-width="326" 
-                 data-height="580" 
-                 data-show-text="true">
+            <img class="kozak-img" src="https://via.placeholder.com/350" alt="Козацька Рада Сміхоликів">
+            
+            <div class="kozak-info">
+                <h3 class="kozak-title">Козацька Рада Сміхоликів</h3>
+                <p class="kozak-desc">Яку тему козаки повинні "рознести" першою? Кидайте свої ідеї в коментарі. Можна:</p>
+                <ul class="kozak-list">
+                    <li>абсурд та меми</li>
+                    <li>політичний сюр та AI</li>
+                    <li>кіберкозаки та новини</li>
+                    <li>історичний треш</li>
+                </ul>
             </div>
+            
+            <a href="https://www.facebook.com/permalink.php?story_fbid=pfbid0dYLUenoVmDqyMbWenj3mSHiokYjdL6QbqGH2sYwZ2fuVkja2Wfhpu5L4doPVk7jCl&id=61589720438503" 
+               target="_blank" 
+               class="vote-btn">
+               👍 Проголосувати у Facebook
+            </a>
         </div>
 
+        <div class="vote-item">
+            <img class="kozak-img" src="https://via.placeholder.com/350" alt="Козак Варіант 2">
+            <div class="kozak-info">
+                <h3 class="kozak-title">Варіант №2</h3>
+                <p class="kozak-desc">Короткий опис або ідея другого козака. Напиши сюди головну замануху для голосування.</p>
+            </div>
+            <a href="ВСТАВ_ЛІНК_НА_ПОСТ_2" target="_blank" class="vote-btn">👍 Проголосувати у Facebook</a>
+        </div>
 
+        <div class="vote-item">
+            <img class="kozak-img" src="https://via.placeholder.com/350" alt="Козак Варіант 3">
+            <div class="kozak-info">
+                <h3 class="kozak-title">Варіант №3</h3>
+                <p class="kozak-desc">Короткий опис або ідея третього козака. Розкажи користувачу, чому варто обрати саме цей варіант.</p>
+            </div>
+            <a href="ВСТАВ_ЛІНК_НА_ПОСТ_3" target="_blank" class="vote-btn">👍 Проголосувати у Facebook</a>
+        </div>
+
+        <div class="vote-item">
+            <img class="kozak-img" src="https://via.placeholder.com/350" alt="Козак Варіант 4">
+            <div class="kozak-info">
+                <h3 class="kozak-title">Варіант №4</h3>
+                <p class="kozak-desc">Короткий опис або ідея четвертого козака. Додай трохи гумору, щоб залучити більше лайків.</p>
+            </div>
+            <a href="ВСТАВ_ЛІНК_НА_ПОСТ_4" target="_blank" class="vote-btn">👍 Проголосувати у Facebook</a>
+        </div>
+
+        <div class="vote-item">
+            <img class="kozak-img" src="https://via.placeholder.com/350" alt="Козак Варіант 5">
+            <div class="kozak-info">
+                <h3 class="kozak-title">Варіант №5</h3>
+                <p class="kozak-desc">Короткий опис або ідея п'ятого козака. Найкраща тема може стати наступним відео-шедевром!</p>
+            </div>
+            <a href="ВСТАВ_ЛІНК_НА_ПОСТ_5" target="_blank" class="vote-btn">👍 Проголосувати у Facebook</a>
+        </div>
 
     </div>
-
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/uk_UA/sdk.js#xfbml=1&version=v23.0"></script>
 
 </body>
 </html>
