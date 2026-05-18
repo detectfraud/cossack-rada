@@ -1,238 +1,75 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <meta name="theme-color" content="#0a0a0f" />
-  <title>Козацька Рада Сміхоликів ⚔️</title>
-  <meta name="description" content="Ти вирішуєш, що буде в наступному ролику. Голосуй. Впливай. Козацька Рада чекає." />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Козак Рада — Голосування</title>
+    <style>
+        /* Базові стилі сторінки */
+        body {
+            background-color: #f4f6f9;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Unbounded:wght@400;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
 
-  <link rel="stylesheet" href="style.css" />
+        /* ПОВЕРНУЛИ СТИЛІ СІТКИ (Контейнер тепер працює правильно) */
+        .voting-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Стилі картки */
+        .vote-item {
+            background: #fff;
+            border: 1px solid #e1e4e8;
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            max-width: 350px; 
+            width: 100%;
+            box-sizing: border-box;
+            transition: transform 0.2s ease;
+        }
+
+        /* Ефект при наведенні для інтерактивності */
+        .vote-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
 
-<!-- ===== SECTION 1: HERO ===== -->
-<section id="hero" class="hero">
-  <!-- Particle canvas -->
-  <canvas id="particleCanvas" aria-hidden="true"></canvas>
+    <h1>Оберіть свого Козака (Голосування)</h1>
 
-  <!-- Decorative glow orbs -->
-  <div class="orb orb-1" aria-hidden="true"></div>
-  <div class="orb orb-2" aria-hidden="true"></div>
-  <div class="orb orb-3" aria-hidden="true"></div>
+    <div class="voting-container">
 
-  <!-- Scanline overlay -->
-  <div class="scanlines" aria-hidden="true"></div>
+        <div class="vote-item">
+            <div class="fb-post" 
+                 data-href="https://www.facebook.com/permalink.php?story_fbid=pfbid0dYLUenoVmDqyMbWenj3mSHiokYjdL6QbqGH2sYwZ2fuVkja2Wfhpu5L4doPVk7jCl&id=61589720438503" 
+                 data-width="326" 
+                 data-height="580" 
+                 data-show-text="true">
+            </div>
+        </div>
 
-  <div class="hero__inner">
-    <!-- Badge -->
-    <div class="hero__badge" id="heroBadge">
-      <span class="badge-dot"></span>
-      LIVE · РАДА В СЕСІЇ
+
+
     </div>
 
-    <!-- Main title -->
-    <h1 class="hero__title" id="heroTitle">
-      <span class="title-line-1">КОЗАЦЬКА</span>
-      <span class="title-line-2">РАДА</span>
-      <span class="title-line-3">СМІХО<span class="accent-lik">ЛИКІВ</span></span>
-    </h1>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/uk_UA/sdk.js#xfbml=1&version=v23.0"></script>
 
-    <p class="hero__sub">
-      Ти не просто дивишся.<br/>
-      <strong>Ти вирішуєш, що буде в наступному ролику.</strong>
-    </p>
-
-    <!-- CTA Buttons -->
-    <div class="hero__ctas">
-      <button class="btn btn--primary" onclick="smoothTo('voting')">
-        <span class="btn-icon">⚔️</span>
-        <span>УВІЙТИ В РАДУ</span>
-        <span class="btn-glow"></span>
-      </button>
-      <button class="btn btn--secondary" onclick="smoothTo('topics')">
-        <span class="btn-icon">🔥</span>
-        <span>ДИВИТИСЬ ТЕМИ</span>
-      </button>
-    </div>
-
-    <!-- Scroll indicator -->
-    <div class="scroll-indicator" aria-hidden="true">
-      <div class="scroll-line"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== SECTION 2: LIVE STATS ===== -->
-<section id="stats" class="stats-section">
-  <div class="stats-grid">
-    <div class="stat-card" data-delay="0">
-      <div class="stat-icon">🗡️</div>
-      <div class="stat-value" data-target="12847" id="statMembers">0</div>
-      <div class="stat-label">Учасників Ради</div>
-    </div>
-    <div class="stat-card" data-delay="150">
-      <div class="stat-icon">🔥</div>
-      <div class="stat-value" data-target="3241" id="statVotes">0</div>
-      <div class="stat-label">Голосів сьогодні</div>
-    </div>
-    <div class="stat-card" data-delay="300">
-      <div class="stat-icon">⚡</div>
-      <div class="stat-value" data-target="5" id="statTopics">0</div>
-      <div class="stat-label">Тем у битві</div>
-    </div>
-  </div>
-
-  <div class="stats-ticker">
-    <div class="ticker-track" id="tickerTrack">
-      <span>⚔️ <b>Гетьман_Х</b> проголосував за «Cyber Січ»</span>
-      <span>🔥 <b>Козак_Мем</b> подав ідею до Ради</span>
-      <span>🗡️ <b>Запорожець_777</b> проголосував за «Лист Маску»</span>
-      <span>⚡ <b>Січовик_UA</b> проголосував за «ШІ vs Козаки»</span>
-      <span>🔥 <b>Борщ_Нація</b> підтримав «Козаки та новини»</span>
-      <span>⚔️ <b>MemeAtaman</b> проголосував за «Cyber Січ»</span>
-    </div>
-  </div>
-</section>
-
-<!-- ===== SECTION 3: BATTLE OF TOPICS ===== -->
-<section id="voting" class="voting-section">
-  <div class="section-header">
-    <div class="section-badge">⚔️ ГОЛОСУВАННЯ</div>
-    <h2 class="section-title" id="topics">БИТВА ТЕМ</h2>
-    <p class="section-sub">Обери тему наступного вірусного ролика. Переможець іде у продакшн.</p>
-  </div>
-
-  <div class="topics-grid" id="topicsGrid">
-    <!-- Cards injected by JS -->
-  </div>
-
-  <!-- Toast notification -->
-  <div class="vote-toast" id="voteToast" aria-live="polite">
-    <span class="toast-icon">⚔️</span>
-    <span class="toast-text">Голос прийнято Радою!</span>
-  </div>
-</section>
-
-<!-- ===== SECTION 4: LIVE LEADERBOARD ===== -->
-<section id="leaderboard" class="leaderboard-section">
-  <div class="section-header">
-    <div class="section-badge">📊 РЕЗУЛЬТАТИ</div>
-    <h2 class="section-title">РЕЙТИНГ РАД</h2>
-  </div>
-  <div class="leaderboard" id="leaderboard">
-    <!-- injected by JS -->
-  </div>
-</section>
-
-<!-- ===== SECTION 5: SUBMIT IDEA ===== -->
-<section id="submit" class="submit-section">
-  <div class="section-header">
-    <div class="section-badge">🟡 ІДЕЯ</div>
-    <h2 class="section-title">ПЕРЕДАЙ ІДЕЮ РАДІ</h2>
-    <p class="section-sub">Козаки розглянуть і, можливо, знімуть твою ідею!</p>
-  </div>
-
-  <div class="submit-card">
-    <div class="submit-form" id="submitForm">
-      <div class="field-group">
-        <label class="field-label" for="nickInput">Твій нікнейм козака</label>
-        <input
-          id="nickInput"
-          class="field-input"
-          type="text"
-          placeholder="Наприклад: Запорожець_777"
-          maxlength="30"
-          autocomplete="off"
-        />
-      </div>
-      <div class="field-group">
-        <label class="field-label" for="ideaInput">Ідея для ролика</label>
-        <textarea
-          id="ideaInput"
-          class="field-input field-textarea"
-          placeholder="Козаки в майбутньому знімають мем-рекаp 2025..."
-          maxlength="200"
-          rows="3"
-        ></textarea>
-        <div class="char-count"><span id="charCount">0</span>/200</div>
-      </div>
-      <button class="btn btn--primary btn--full" id="submitBtn" onclick="submitIdea()">
-        <span class="btn-icon">⚔️</span>
-        <span>ПЕРЕДАТИ ІДЕЮ РАДІ</span>
-        <span class="btn-glow"></span>
-      </button>
-    </div>
-
-    <!-- Success state -->
-    <div class="submit-success" id="submitSuccess" style="display:none">
-      <div class="success-icon">✅</div>
-      <h3 class="success-title">Рада отримала твою ідею!</h3>
-      <p class="success-sub">Козаки розглянуть та оголосять результати у Telegram.</p>
-      <button class="btn btn--secondary" onclick="resetSubmit()">Надіслати ще</button>
-    </div>
-  </div>
-</section>
-
-<!-- ===== SECTION 6: AD ZONE ===== -->
-<section class="ad-section">
-  <div class="ad-label">Реклама, яка перетворюється на нові сміхолики</div>
-  <div class="ad-placeholder" id="adPlaceholder">
-    <!-- Monetag Native Banner integration point -->
-    <div class="ad-mock">
-      <span>🎯</span>
-      <p>Тут буде нативний банер від Monetag</p>
-      <small>728×90 / adaptive native</small>
-    </div>
-  </div>
-</section>
-
-<!-- ===== SECTION 7: SOCIAL CTA ===== -->
-<section id="social" class="social-section">
-  <div class="section-header">
-    <div class="section-badge">📲 ПІДПИСУЙСЯ</div>
-    <h2 class="section-title">СЛІДКУЙ ЗА КОЗАКАМИ</h2>
-    <p class="section-sub">Перші дізнаються результати та нові ролики</p>
-  </div>
-
-  <div class="social-grid">
-    <a href="https://t.me/kozatska_rada" target="_blank" rel="noopener" class="social-btn social-btn--tg">
-      <span class="social-icon">✈️</span>
-      <div class="social-info">
-        <div class="social-name">Telegram</div>
-        <div class="social-stat">Канал Ради</div>
-      </div>
-      <span class="social-arrow">→</span>
-    </a>
-    <a href="https://tiktok.com/@kozatska_rada" target="_blank" rel="noopener" class="social-btn social-btn--tt">
-      <span class="social-icon">🎵</span>
-      <div class="social-info">
-        <div class="social-name">TikTok</div>
-        <div class="social-stat">Відео щодня</div>
-      </div>
-      <span class="social-arrow">→</span>
-    </a>
-    <a href="https://youtube.com/@kozatska_rada" target="_blank" rel="noopener" class="social-btn social-btn--yt">
-      <span class="social-icon">▶️</span>
-      <div class="social-info">
-        <div class="social-name">YouTube Shorts</div>
-        <div class="social-stat">Highlights</div>
-      </div>
-      <span class="social-arrow">→</span>
-    </a>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer class="footer">
-  <p>⚔️ Козацька Рада Сміхоликів · 2025 · Слава Козакам!</p>
-</footer>
-
-<script src="main.js"></script>
 </body>
 </html>
