@@ -13,7 +13,7 @@ body {
   color: #fff;
 }
 
-/* ====== LAYOUT ====== */
+/* WRAPPER */
 .wrapper {
   display: flex;
   justify-content: center;
@@ -21,17 +21,17 @@ body {
   margin: auto;
 }
 
-/* SIDEBARS (PC) */
+/* SIDEBARS */
 .sidebar {
   width: 160px;
   padding: 10px;
 }
 
-.ad-box {
+.ad {
   background: #1e1e1e;
   height: 600px;
-  margin: 10px 0;
   border-radius: 10px;
+  margin: 10px 0;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -47,8 +47,8 @@ body {
 }
 
 h1 {
-  color: gold;
   text-align: center;
+  color: gold;
 }
 
 .card {
@@ -58,24 +58,19 @@ h1 {
   border-radius: 12px;
 }
 
-video {
-  width: 100%;
-  border-radius: 12px;
-}
-
-.donate-btn {
+/* BUTTON */
+.btn {
   display:block;
   text-align:center;
-  padding: 15px;
+  padding: 14px;
   background: gold;
   color: black;
   font-weight: bold;
   border-radius: 10px;
   text-decoration: none;
-  margin-top: 10px;
 }
 
-/* ===== MOBILE ===== */
+/* MOBILE */
 @media (max-width: 900px) {
   .wrapper {
     flex-direction: column;
@@ -85,20 +80,15 @@ video {
     display: none;
   }
 
-  .content {
-    max-width: 100%;
-  }
-
-  /* sticky bottom ad */
-  .sticky-ad {
+  .sticky {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     background: #111;
-    border-top: 1px solid #333;
     padding: 8px;
     text-align: center;
+    border-top: 1px solid #333;
     z-index: 999;
   }
 }
@@ -109,9 +99,9 @@ video {
 
 <div class="wrapper">
 
-  <!-- LEFT ADS (PC) -->
+  <!-- LEFT ADS -->
   <div class="sidebar">
-    <div class="ad-box">Monetag Ad</div>
+    <div class="ad">Monetag</div>
   </div>
 
   <!-- CONTENT -->
@@ -121,40 +111,42 @@ video {
 
     <div class="card">
       <p>
-        Відео, яке зібрало 2.7 млн переглядів, стало початком серії.
+        Відео, яке зібрало 2.7 млн переглядів, стало початком серії мемів про козаків.
         Це незалежний проєкт, який існує завдяки підтримці глядачів.
       </p>
     </div>
 
+    <!-- VIDEO -->
     <div class="card">
-      <!-- VIDEO PLACE -->
-      <div class="ad-box" style="height:auto;padding:40px;">
-<iframe 
-  src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/watch/?v=1254517756765246"
-  width="100%" 
-  height="480"
-  style="border:none;overflow:hidden" 
-  scrolling="no" 
-  frameborder="0" 
-  allowfullscreen="true">
-</iframe>
-      </div>
+      <h3>🎬 Переглянути відео</h3>
+
+      <a class="btn" target="_blank"
+         href="https://www.facebook.com/permalink.php?story_fbid=122099391135324014&id=61589720438503">
+         ▶ Відкрити відео у Facebook
+      </a>
+
+      <p style="margin-top:10px;color:#aaa;font-size:13px;">
+        Якщо відео не відкривається — онови сторінку або відкрий у додатку Facebook.
+      </p>
     </div>
 
+    <!-- DONATE -->
     <div class="card">
-      <h3>Підтримати проєкт</h3>
+      <h3>❤️ Підтримати проєкт</h3>
+
       <p>
-        Створення відео потребує ресурсів. Якщо тобі подобається серіал —
-        ти можеш підтримати його розвиток.
+        Створення відео потребує ресурсів (монтаж, AI-інструменти, генерація сцен).
+        Якщо тобі подобається серіал — ти можеш підтримати його розвиток.
       </p>
 
-      <a class="donate-btn" href="https://donatello.to/yourpage" target="_blank">
-        ❤️ Задонатити
+      <a class="btn" href="https://donatello.to/yourpage" target="_blank">
+        💰 Задонатити
       </a>
     </div>
 
+    <!-- MONETIZATION INFO -->
     <div class="card">
-      <h3>Монетизація</h3>
+      <h3>📢 Монетизація</h3>
       <p>
         Реклама допомагає випускати нові серії. Дякуємо за підтримку ❤️
       </p>
@@ -162,15 +154,15 @@ video {
 
   </div>
 
-  <!-- RIGHT ADS (PC) -->
+  <!-- RIGHT ADS -->
   <div class="sidebar">
-    <div class="ad-box">Monetag Ad</div>
+    <div class="ad">Monetag</div>
   </div>
 
 </div>
 
 <!-- MOBILE STICKY AD -->
-<div class="sticky-ad">
+<div class="sticky">
   Monetag Sticky Ad
 </div>
 
