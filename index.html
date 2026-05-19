@@ -14,7 +14,178 @@ body {
 }
 
 .wrapper {
+  display: flex;<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Козацький серіал</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f0f0f;
+  color: #fff;
+}
+
+.wrapper {
   display: flex;
+  justify-content: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.sidebar {
+  width: 160px;
+  padding: 10px;
+}
+
+.ad {
+  background: #1e1e1e;
+  height: 600px;
+  border-radius: 10px;
+  margin: 10px 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#777;
+  font-size:12px;
+}
+
+.content {
+  flex: 1;
+  max-width: 700px;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: gold;
+}
+
+.card {
+  background: #1b1b1b;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 12px;
+}
+
+/* FB VIDEO RESPONSIVE */
+.fb-video {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+/* BUTTON */
+.btn {
+  display:block;
+  text-align:center;
+  padding: 14px;
+  background: gold;
+  color: black;
+  font-weight: bold;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .wrapper { flex-direction: column; }
+  .sidebar { display: none; }
+
+  .sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #111;
+    padding: 8px;
+    text-align: center;
+    border-top: 1px solid #333;
+    z-index: 999;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <!-- LEFT ADS -->
+  <div class="sidebar">
+    <div class="ad">Monetag</div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <h1>Козацький серіал</h1>
+
+    <div class="card">
+      <p>
+        Відео, яке зібрало 2.7 млн переглядів, стало початком серії мемів про козаків.
+        Це незалежний проєкт, який живе завдяки підтримці глядачів.
+      </p>
+    </div>
+
+    <!-- FACEBOOK VIDEO EMBED -->
+    <div class="card">
+
+      <div class="fb-video">
+        <iframe
+          src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3D1254517756765246&show_text=1&width=700&appId=1315606777335941"
+          width="100%"
+          height="530"
+          style="border:none;overflow:hidden"
+          scrolling="no"
+          frameborder="0"
+          allowfullscreen="true"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+        </iframe>
+      </div>
+
+    </div>
+
+    <!-- DONATE -->
+    <div class="card">
+      <h3>❤️ Підтримати серіал</h3>
+      <p>
+        Сервіси для створення відео (AI, монтаж, генерація сцен) платні.
+        Якщо тобі подобається — підтримай розвиток.
+      </p>
+
+      <a class="btn" href="https://donatello.to/yourpage" target="_blank">
+        💰 Задонатити
+      </a>
+    </div>
+
+    <!-- MONETIZATION -->
+    <div class="card">
+      <h3>📢 Монетизація</h3>
+      <p>
+        Реклама допомагає випускати нові серії. Дякуємо ❤️
+      </p>
+    </div>
+
+  </div>
+
+  <!-- RIGHT ADS -->
+  <div class="sidebar">
+    <div class="ad">Monetag</div>
+  </div>
+
+</div>
+
+<!-- MOBILE STICKY -->
+<div class="sticky">
+  Monetag Sticky Ad
+</div>
+
+</body>
+</html>
   justify-content: center;
   max-width: 1200px;
   margin: auto;
