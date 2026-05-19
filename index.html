@@ -1,123 +1,199 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Козак Рада — Голосування</title>
-    <style>
-        /* Базові стилі сторінки */
-        body {
-            background-color: #f4f6f9;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
+<title>Козацька Рада — Голосування</title>
 
-        /* Стилі сітки для карток */
-        .voting-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 24px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+<style>
 
-        /* Стилі картки з ефектом завантаження */
-        .vote-item {
-            background: #fff;
-            border: 1px solid #e1e4e8;
-            border-radius: 12px;
-            padding: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            max-width: 750px; 
-            width: 100%;
-            box-sizing: border-box;
-            min-height: 450px; /* Мінімальна висота під розмір віджета */
-            
-            /* Гарна анімація "скелетона", поки пост вантажиться */
-            background-image: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-        }
+/* =========================
+   БАЗА
+========================= */
 
-        /* Коли Facebook віджет завантажився, анімація фону зникає */
-        .vote-itemfb-post-loaded,
-        .vote-item:has(.fb-post[data-fb-shadow-host]) {
-            background-image: none;
-            background-color: #fff;
-            animation: none;
-        }
+body{
+    margin:0;
+    padding:20px;
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+}
 
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
+h1{
+    text-align:center;
+    margin-bottom:30px;
+}
 
-        .vote-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-    </style>
+/* =========================
+   СІТКА
+========================= */
+
+.voting-container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:24px;
+    max-width:1200px;
+    margin:auto;
+}
+
+/* =========================
+   КАРТКА
+========================= */
+
+.vote-item{
+
+    width:100%;
+    max-width:550px;
+
+    padding:12px;
+
+    border-radius:14px;
+    background:#fff;
+
+    box-sizing:border-box;
+
+    min-height:420px;
+
+    border:1px solid #ddd;
+
+    /* hover animation */
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.06);
+
+    /* skeleton loader */
+    background-image:linear-gradient(
+        90deg,
+        #f0f0f0 25%,
+        #e3e3e3 50%,
+        #f0f0f0 75%
+    );
+
+    background-size:200% 100%;
+
+    animation:loading 1.3s linear infinite;
+}
+
+/* hover */
+.vote-item:hover{
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.12);
+}
+
+/* коли FB завантажився */
+.vote-item.loaded{
+
+    animation:none;
+
+    background-image:none;
+
+    background-color:#fff;
+}
+
+/* skeleton animation */
+@keyframes loading{
+
+    0%{
+        background-position:200% 0;
+    }
+
+    100%{
+        background-position:-200% 0;
+    }
+}
+
+</style>
 </head>
+
 <body>
 
-    <h1>Оберіть свого Козака (Голосування)</h1>
+<h1>⚔️ Обери свого Козака</h1>
 
-    <div class="voting-container">
+<div class="voting-container">
 
-        <div class="vote-item">
-            <div class="fb-post" 
-                 data-href="https://www.facebook.com/permalink.php?story_fbid=pfbid0dYLUenoVmDqyMbWenj3mSHiokYjdL6QbqGH2sYwZ2fuVkja2Wfhpu5L4doPVk7jCl&id=61589720438503" 
-                 data-width="500" 
-                 data-show-text="true">
-            </div>
-        </div>
+    <!-- КАРТКА 1 -->
+    <div class="vote-item">
 
-        <div class="vote-item">
-            <div class="fb-post" 
-                 data-href="https://www.facebook.com/permalink.php?story_fbid=ПРОПИШИ_ID_ПОСТА_2&id=61589720438503" 
-                 data-width="328" 
-                 data-show-text="true">
-            </div>
-        </div>
+        <div
+            class="fb-post"
 
-        <div class="vote-item">
-            <div class="fb-post" 
-                 data-href="https://www.facebook.com/permalink.php?story_fbid=ПРОПИШИ_ID_ПОСТА_3&id=61589720438503" 
-                 data-width="328" 
-                 data-show-text="true">
-            </div>
+            data-href="https://www.facebook.com/permalink.php?story_fbid=pfbid0dYLUenoVmDqyMbWenj3mSHiokYjdL6QbqGH2sYwZ2fuVkja2Wfhpu5L4doPVk7jCl&id=61589720438503"
+
+            data-show-text="true">
+
         </div>
 
     </div>
 
-    <div id="fb-root"></div>
-    <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-                cookie           : true,
-                xfbml            : true,
-                version          : 'v23.0'
+    <!-- КАРТКА 2 -->
+    <div class="vote-item">
+
+        <div
+            class="fb-post"
+
+            data-href="https://www.facebook.com/permalink.php?story_fbid=PASTE_REAL_POST_ID&id=61589720438503"
+
+            data-show-text="true">
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Facebook root -->
+<div id="fb-root"></div>
+
+<script>
+
+/* =========================
+   FACEBOOK INIT
+========================= */
+
+window.fbAsyncInit = function(){
+
+    FB.init({
+
+        xfbml:true,
+
+        version:'v23.0'
+    });
+
+    /*
+      коли FB embed-и відрендерились:
+      - прибираємо skeleton loader
+      - додаємо клас loaded
+    */
+
+    FB.Event.subscribe('xfbml.render', function(){
+
+        document
+            .querySelectorAll('.vote-item')
+            .forEach(function(item){
+
+                item.classList.add('loaded');
+
             });
-            
-            /* Прибираємо сірий фон завантаження з карток, коли FB готовий */
-            FB.Event.subscribe('xfbml.render', function() {
-                document.querySelectorAll('.vote-item').forEach(item => {
-                    item.style.backgroundImage = 'none';
-                    item.style.backgroundColor = '#fff';
-                });
-            });
-        };
-    </script>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/uk_UA/sdk.js"></script>
+
+    });
+
+};
+
+</script>
+
+<!-- Facebook SDK -->
+<script
+    async
+    defer
+    crossorigin="anonymous"
+    src="https://connect.facebook.net/uk_UA/sdk.js">
+</script>
 
 </body>
 </html>
