@@ -3,197 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Козацька Рада — Голосування</title>
+<title>Козацький серіал</title>
 
 <style>
-
-/* =========================
-   БАЗА
-========================= */
-
-body{
-    margin:0;
-    padding:20px;
-    font-family:Arial,sans-serif;
-    background:#f4f6f9;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f0f0f;
+  color: #fff;
 }
 
-h1{
-    text-align:center;
-    margin-bottom:30px;
+/* ====== LAYOUT ====== */
+.wrapper {
+  display: flex;
+  justify-content: center;
+  max-width: 1200px;
+  margin: auto;
 }
 
-/* =========================
-   СІТКА
-========================= */
-
-.voting-container{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:24px;
-    max-width:1200px;
-    margin:auto;
+/* SIDEBARS (PC) */
+.sidebar {
+  width: 160px;
+  padding: 10px;
 }
 
-/* =========================
-   КАРТКА
-========================= */
-
-.vote-item{
-
-    width:100%;
-    max-width:550px;
-
-    padding:12px;
-
-    border-radius:14px;
-    background:#fff;
-
-    box-sizing:border-box;
-
-    min-height:420px;
-
-    border:1px solid #ddd;
-
-    /* hover animation */
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease;
-
-    box-shadow:
-        0 4px 12px rgba(0,0,0,.06);
-
-    /* skeleton loader */
-    background-image:linear-gradient(
-        90deg,
-        #f0f0f0 25%,
-        #e3e3e3 50%,
-        #f0f0f0 75%
-    );
-
-    background-size:200% 100%;
-
-    animation:loading 1.3s linear infinite;
+.ad-box {
+  background: #1e1e1e;
+  height: 600px;
+  margin: 10px 0;
+  border-radius: 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#777;
+  font-size:12px;
 }
 
-/* hover */
-.vote-item:hover{
-    transform:translateY(-4px);
-
-    box-shadow:
-        0 8px 20px rgba(0,0,0,.12);
+/* CONTENT */
+.content {
+  flex: 1;
+  max-width: 700px;
+  padding: 20px;
 }
 
-/* коли FB завантажився */
-.vote-item.loaded{
-
-    animation:none;
-
-    background-image:none;
-
-    background-color:#fff;
+h1 {
+  color: gold;
+  text-align: center;
 }
 
-/* skeleton animation */
-@keyframes loading{
-
-    0%{
-        background-position:200% 0;
-    }
-
-    100%{
-        background-position:-200% 0;
-    }
+.card {
+  background: #1b1b1b;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 12px;
 }
 
+video {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.donate-btn {
+  display:block;
+  text-align:center;
+  padding: 15px;
+  background: gold;
+  color: black;
+  font-weight: bold;
+  border-radius: 10px;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 900px) {
+  .wrapper {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .content {
+    max-width: 100%;
+  }
+
+  /* sticky bottom ad */
+  .sticky-ad {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #111;
+    border-top: 1px solid #333;
+    padding: 8px;
+    text-align: center;
+    z-index: 999;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<h1>⚔️ Обери свого Козака</h1>
+<div class="wrapper">
 
-<div class="voting-container">
+  <!-- LEFT ADS (PC) -->
+  <div class="sidebar">
+    <div class="ad-box">Monetag Ad</div>
+  </div>
 
-    <!-- КАРТКА 1 -->
-    <div class="vote-item">
+  <!-- CONTENT -->
+  <div class="content">
 
-        <div
-            class="fb-post"
+    <h1>Козацький серіал</h1>
 
-            data-href="https://www.facebook.com/permalink.php?story_fbid=pfbid0dYLUenoVmDqyMbWenj3mSHiokYjdL6QbqGH2sYwZ2fuVkja2Wfhpu5L4doPVk7jCl&id=61589720438503"
-
-            data-show-text="true">
-
-        </div>
-
+    <div class="card">
+      <p>
+        Відео, яке зібрало 2.7 млн переглядів, стало початком серії.
+        Це незалежний проєкт, який існує завдяки підтримці глядачів.
+      </p>
     </div>
 
-    <!-- КАРТКА 2 -->
-    <div class="vote-item">
-
-        <div
-            class="fb-post"
-
-            data-href="https://www.facebook.com/groups/2161626537717692/permalink/2162219894325023/"
-
-            data-show-text="true">
-
-        </div>
-
+    <div class="card">
+      <!-- VIDEO PLACE -->
+      <div class="ad-box" style="height:auto;padding:40px;">
+<iframe 
+  src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/watch/?v=1254517756765246"
+  width="100%" 
+  height="480"
+  style="border:none;overflow:hidden" 
+  scrolling="no" 
+  frameborder="0" 
+  allowfullscreen="true">
+</iframe>
+      </div>
     </div>
+
+    <div class="card">
+      <h3>Підтримати проєкт</h3>
+      <p>
+        Створення відео потребує ресурсів. Якщо тобі подобається серіал —
+        ти можеш підтримати його розвиток.
+      </p>
+
+      <a class="donate-btn" href="https://donatello.to/yourpage" target="_blank">
+        ❤️ Задонатити
+      </a>
+    </div>
+
+    <div class="card">
+      <h3>Монетизація</h3>
+      <p>
+        Реклама допомагає випускати нові серії. Дякуємо за підтримку ❤️
+      </p>
+    </div>
+
+  </div>
+
+  <!-- RIGHT ADS (PC) -->
+  <div class="sidebar">
+    <div class="ad-box">Monetag Ad</div>
+  </div>
 
 </div>
 
-<!-- Facebook root -->
-<div id="fb-root"></div>
-
-<script>
-
-/* =========================
-   FACEBOOK INIT
-========================= */
-
-window.fbAsyncInit = function(){
-
-    FB.init({
-
-        xfbml:true,
-
-        version:'v23.0'
-    });
-
-    /*
-      коли FB embed-и відрендерились:
-      - прибираємо skeleton loader
-      - додаємо клас loaded
-    */
-
-    FB.Event.subscribe('xfbml.render', function(){
-
-        document
-            .querySelectorAll('.vote-item')
-            .forEach(function(item){
-
-                item.classList.add('loaded');
-
-            });
-
-    });
-
-};
-
-</script>
-
-<!-- Facebook SDK -->
-<script
-    async
-    defer
-    crossorigin="anonymous"
-    src="https://connect.facebook.net/uk_UA/sdk.js">
-</script>
+<!-- MOBILE STICKY AD -->
+<div class="sticky-ad">
+  Monetag Sticky Ad
+</div>
 
 </body>
 </html>
