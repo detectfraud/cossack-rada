@@ -254,7 +254,7 @@ h1 {
 <!-- LANG SWITCHER -->
 <div class="lang-switcher">
   <button class="lang-btn active" id="btn-uk" onclick="setLang('uk')">🇺🇦 UA</button>
-  <button class="lang-btn"        id="btn-en" onclick="setLang('en')">🇬🇧 EN</button>
+  <button class="lang-btn"        id="btn-en" onclick="setLang('en')">🇺🇸 EN</button>
 </div>
 
 <div class="wrapper">
@@ -302,20 +302,20 @@ h1 {
           </iframe>
         </div>
 
-        <div class="fb-stats">
-          <span class="fb-stat">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#8a8d91"><path d="M7.5 2a2 2 0 0 0-2 2v1H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1.5V4a2 2 0 0 0-2-2h-9zm0 2h9v1h-9V4zM4 7h16v12H4V7zm8 2a1 1 0 0 0-1 1v2H9a1 1 0 1 0 0 2h2v2a1 1 0 1 0 2 0v-2h2a1 1 0 1 0 0-2h-2v-2a1 1 0 0 0-1-1z"/></svg>
-            <span id="js-likes"></span>
-          </span>
-          <span class="fb-stat">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#8a8d91"><path d="M2 4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5l-4 4-4-4H4a2 2 0 0 1-2-2V4z"/></svg>
-            <span id="js-comments"></span>
-          </span>
-          <span class="fb-stat">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#8a8d91"><path d="M18 8h-1V6a5 5 0 0 0-10 0v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zm-6 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm3.1-9H8.9V6a3.1 3.1 0 0 1 6.2 0v2z"/></svg>
-            <span id="js-shares"></span>
-          </span>
-        </div>
+<div class="fb-stats">
+  <span class="fb-stat">
+    <img src="hand.png" width="16" height="16" alt="Лайки">
+    <span id="js-likes"></span>
+  </span>
+  <span class="fb-stat">
+    <img src="comment.png" width="16" height="16" alt="Коментарі">
+    <span id="js-comments"></span>
+  </span>
+  <span class="fb-stat">
+    <img src="spread.png" width="16" height="16" alt="Поширення">
+    <span id="js-shares"></span>
+  </span>
+</div>
       </div>
     </div>
 
@@ -385,9 +385,9 @@ function setLang(lang) {
 }
 
 // POST_CONFIG (незмінні дані)
-document.getElementById('js-author-name').textContent = POST_CONFIG.author_name;
-document.getElementById('js-author-name').href        = POST_CONFIG.author_url;
-document.getElementById('js-post-date').textContent   = POST_CONFIG.post_date;
+//document.getElementById('js-author-name').textContent = POST_CONFIG.author_name;
+//document.getElementById('js-author-name').href        = POST_CONFIG.author_url;
+//document.getElementById('js-post-date').textContent   = POST_CONFIG.post_date;
 document.getElementById('js-likes').textContent       = POST_CONFIG.likes;
 document.getElementById('js-comments').textContent    = POST_CONFIG.comments;
 document.getElementById('js-shares').textContent      = POST_CONFIG.shares;
