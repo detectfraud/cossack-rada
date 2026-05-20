@@ -37,6 +37,38 @@ body {
   font-size:12px;
 }
 
+/* ADBLOCK MESSAGE */
+.adblock-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.adblock-msg .adblock-icon {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.adblock-msg p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #aaa;
+}
+
+.adblock-msg strong {
+  color: gold;
+}
+
+.adblock-msg--sticky {
+  font-size: 13px;
+  color: #ccc;
+  padding: 6px;
+}
+
 .content {
   flex: 1;
   max-width: 700px;
@@ -275,6 +307,7 @@ h1 {
 </div>
 
 <script src="config.js"></script>
+<script src="security.js"></script>
 <script>
   // Рендер даних з config.js
   document.getElementById('js-author-name').textContent = POST_CONFIG.author_name;
