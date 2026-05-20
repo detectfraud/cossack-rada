@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Козацький серіал</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- LANG SWITCHER -->
+<div class="lang-switcher">
+  <button class="lang-btn active" id="btn-uk" onclick="setLang('uk')">UA</button>
+  <button class="lang-btn"        id="btn-en" onclick="setLang('en')">EN</button>
+</div>
+
+<div class="wrapper">
+
+  <!-- LEFT ADS -->
+  <div class="sidebar">
+    <div class="ad" id="ad-left"><!-- MONETAG SLOT --></div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <h1 id="js-hero"></h1>
+
+    <div class="card">
+      <p id="js-sub"></p>
+    </div>
+
+    <div class="card">
+      <p id="js-before-video" style="margin:0 0 10px;color:#bbb;font-size:14px;"></p>
+
+      <!-- FACEBOOK POST MOCK -->
+      <div class="fb-post-mock">
+
+        <div class="fb-post-header">
+
+          <div class="fb-author-info">
+            <a class="fb-author-name" id="js-author-name" href="#" target="_blank"></a>
+            <span class="fb-post-date" id="js-post-date"></span>
+          </div>
+
+        </div>
+
+        <p class="fb-post-text" id="js-post-text"></p>
+
+        <div class="fb-video">
+          <iframe
+            src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3D1254517756765246&show_text=0&width=700&appId=1315606777335941"
+            width="100%"
+            height="400"
+            style="border:none;overflow:hidden;display:block;"
+            scrolling="no"
+            frameborder="0"
+            allowfullscreen="true"
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+          </iframe>
+        </div>
+
+<div class="fb-stats">
+  <span class="fb-stat">
+    <img src="hand.png" width="16" height="16" alt="Лайки">
+    <span id="js-likes"></span>
+  </span>
+  <span class="fb-stat">
+    <img src="spread.png" width="16" height="16" alt="Коментарі">
+    <span id="js-comments"></span>
+  </span>
+  <span class="fb-stat">
+    <img src="comment.png" width="16" height="16" alt="Поширення">
+    <span id="js-shares"></span>
+  </span>
+</div>
+
+      </div>
+    </div>
+
+    <!-- DONATE -->
+    <div class="card">
+      <h3 id="js-donate-heading"></h3>
+      <p id="js-donate-text" style="white-space:pre-line;font-size:14px;line-height:1.7;"></p>
+      <a class="btn" id="js-donate-btn" href="https://donatello.to/yourpage" target="_blank">💰 </a>
+    </div>
+
+    <!-- MONETIZATION -->
+    <div class="card">
+      <h3 id="js-ads-heading"></h3>
+      <p id="js-ads-text" style="white-space:pre-line;font-size:14px;line-height:1.7;"></p>
+    </div>
+
+    <!-- NEXT CTA -->
+    <p class="next-cta" id="js-next"></p>
+
+  </div>
+
+  <!-- RIGHT ADS -->
+  <div class="sidebar">
+    <div class="ad" id="ad-right"><!-- MONETAG SLOT --></div>
+  </div>
+
+</div>
+
+<!-- MOBILE STICKY -->
+<div class="sticky" id="js-sticky"><!-- MONETAG SLOT --></div>
+
+<!-- SCRIPTS: порядок важливий -->
+<script src="main.js"></script>
+
+</body>
+</html>
