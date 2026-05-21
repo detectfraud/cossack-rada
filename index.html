@@ -41,7 +41,7 @@
         </div>
         <p class="fb-post-text" id="js-post-text"></p>
         
-<div class="video-container">
+        <div class="video-container">
           <iframe
             src="https://www.youtube.com/embed/iIcqtIL6XqU?rel=0&modestbranding=1&showinfo=0"
             title="YouTube video player"
@@ -94,5 +94,21 @@
 <div class="sticky" id="js-sticky"></div>
 
 <script src="main.js"></script>
+
+<!-- Інтеграція Service Worker для Monetag -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('./sw.js')
+        .then(function(reg) {
+          console.log('SW успішно зареєстрований для Monetag. Сфера дії:', reg.scope);
+        })
+        .catch(function(err) {
+          console.error('Помилка реєстрації SW:', err);
+        });
+    });
+  }
+</script>
+
 </body>
 </html>
