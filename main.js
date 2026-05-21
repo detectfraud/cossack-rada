@@ -64,7 +64,6 @@ const I18N = {
 // =============================================
 // IP БЛОКУВАННЯ — РФ та Білорусь
 // =============================================
-/*
 (function () {
   const BLOCKED_COUNTRIES = ['RU', 'BY'];
 
@@ -109,14 +108,13 @@ const I18N = {
     window.stop();
   };
 
-  fetch('https://ip-api.com/json/?fields=countryCode', { cache: 'no-store' })
+  fetch('https://ipapi.co/json/', { cache: 'no-store' })
     .then(r => r.json())
     .then(data => {
       if (BLOCKED_COUNTRIES.includes(data.countryCode)) showGeoBlock();
     })
     .catch(() => {}); // при помилці — не блокуємо
 })();
-*/
 // =============================================
 // ADBLOCK DETECTOR (Monetag)
 // =============================================
