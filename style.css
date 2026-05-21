@@ -129,15 +129,15 @@ h1 { text-align: center; color: gold; }
 }
 .fb-stat { display: flex; align-items: center; gap: 5px; font-size: 13px; color: #8a8d91; }
 
-/* ===== FB VIDEO АДАПТИВНИЙ ===== */
-.fb-video { 
+/* ===== YOUTUBE VIDEO АДАПТИВНИЙ ===== */
+.video-container { 
   width: 100%; 
   position: relative;
   padding-bottom: 56.25%; /* Ідеально під пропорцію відео 16:9 */
   height: 0;
   overflow: hidden; 
 }
-.fb-video iframe { 
+.video-container iframe { 
   position: absolute;
   top: 0;
   left: 0;
