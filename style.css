@@ -12,13 +12,15 @@ body {
 
 /* ===== LANG SWITCHER ===== */
 .lang-switcher {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  z-index: 1000;
   display: flex;
-  justify-content: center;
   gap: 6px;
-  padding: 10px 0 0;
 }
 .lang-btn {
-  padding: 5px 12px;
+  padding: 5px 10px;
   border-radius: 20px;
   border: 1px solid #444;
   background: #1a1a1a;
@@ -33,31 +35,32 @@ body {
 
 /* ===== LAYOUT ===== */
 .wrapper {
-  display: flex;
   max-width: 1200px;
   margin: 0 auto;
-  align-items: flex-start;
+  overflow: hidden; /* clearfix */
 }
 
 .sidebar {
   width: 160px;
-  flex-shrink: 0;
+  float: left;
   padding: 10px;
-  position: sticky;
-  top: 10px;
+}
+
+.sidebar.right {
+  float: right;
 }
 
 .content {
-  flex: 1;
-  min-width: 0;
+  margin: 0 180px; /* 160px + 20px gap з обох боків */
   padding: 20px;
+  padding-top: 50px;
 }
 
 /* ===== AD SLOTS ===== */
 .ad {
   background: #1e1e1e;
   border-radius: 10px;
-  width: 100%;
+  width: 140px;
   min-height: 600px;
   display: flex;
   align-items: center;
@@ -82,7 +85,7 @@ body {
 .adblock-msg--sticky { font-size: 13px; color: #ccc; padding: 6px; }
 
 /* ===== TYPOGRAPHY ===== */
-h1 { text-align: center; color: gold; margin: 10px 0 20px; }
+h1 { text-align: center; color: gold; }
 
 .card {
   background: #1b1b1b;
@@ -149,5 +152,6 @@ h1 { text-align: center; color: gold; margin: 10px 0 20px; }
 /* ===== MOBILE ===== */
 @media (max-width: 900px) {
   .sidebar { display: none; }
+  .content { margin: 0; }
   .sticky  { display: block; }
 }
