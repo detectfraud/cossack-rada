@@ -12,16 +12,13 @@ body {
 
 /* ===== LANG SWITCHER ===== */
 .lang-switcher {
-  position: sticky;
-  top: 10px;
-  z-index: 1000;
   display: flex;
-  gap: 6px;
   justify-content: center;
-  margin-bottom: 10px;
+  gap: 6px;
+  padding: 10px 0 0;
 }
 .lang-btn {
-  padding: 5px 10px;
+  padding: 5px 12px;
   border-radius: 20px;
   border: 1px solid #444;
   background: #1a1a1a;
@@ -50,22 +47,17 @@ body {
   top: 10px;
 }
 
-.sidebar.right {
-  /* те саме що лівий */
-}
-
 .content {
   flex: 1;
   min-width: 0;
   padding: 20px;
-  padding-top: 50px;
 }
 
 /* ===== AD SLOTS ===== */
 .ad {
   background: #1e1e1e;
   border-radius: 10px;
-  width: 140px;
+  width: 100%;
   min-height: 600px;
   display: flex;
   align-items: center;
@@ -90,7 +82,7 @@ body {
 .adblock-msg--sticky { font-size: 13px; color: #ccc; padding: 6px; }
 
 /* ===== TYPOGRAPHY ===== */
-h1 { text-align: center; color: gold; }
+h1 { text-align: center; color: gold; margin: 10px 0 20px; }
 
 .card {
   background: #1b1b1b;
@@ -156,9 +148,6 @@ h1 { text-align: center; color: gold; }
 
 /* ===== MOBILE ===== */
 @media (max-width: 900px) {
-  .wrapper {
-    grid-template-columns: 1fr;
-  }
   .sidebar { display: none; }
   .sticky  { display: block; }
 }
