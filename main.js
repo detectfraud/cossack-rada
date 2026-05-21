@@ -64,57 +64,7 @@ const I18N = {
 // =============================================
 // IP БЛОКУВАННЯ — РФ та Білорусь
 // =============================================
-(function () {
-  const BLOCKED_COUNTRIES = ['RU', 'BY'];
-
-  const showGeoBlock = () => {
-    // Ховаємо весь контент
-    document.body.style.overflow = 'hidden';
-    document.body.innerHTML = `
-      <style>
-        @keyframes _spin {
-          to { transform: rotate(360deg); }
-        }
-        ._loader {
-          position: fixed;
-          inset: 0;
-          background: #0a0a0a;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 20px;
-          font-family: Arial, sans-serif;
-        }
-        ._spinner {
-          width: 48px;
-          height: 48px;
-          border: 4px solid #222;
-          border-top-color: #555;
-          border-radius: 50%;
-          animation: _spin 0.9s linear infinite;
-        }
-        ._loader-text {
-          color: #444;
-          font-size: 13px;
-          letter-spacing: 1px;
-        }
-      </style>
-      <div class="_loader">
-        <div class="_spinner"></div>
-        <span class="_loader-text">Завантаження...</span>
-      </div>`;
-    // Зупиняємо будь-яке подальше завантаження
-    window.stop();
-  };
-
-  fetch('https://ipapi.co/json/', { cache: 'no-store' })
-    .then(r => r.json())
-    .then(data => {
-      if (BLOCKED_COUNTRIES.includes(data.countryCode)) showGeoBlock();
-    })
-    .catch(() => {}); // при помилці — не блокуємо
-})();
+-----------------------------------------------------
 // =============================================
 // ADBLOCK DETECTOR (Monetag)
 // =============================================
