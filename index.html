@@ -8,25 +8,20 @@
 </head>
 <body>
 
-<!-- LANG SWITCHER -->
 <div class="lang-switcher">
-  <button class="lang-btn active" id="btn-uk" onclick="setLang('uk')">UA</button>
-  <button class="lang-btn"        id="btn-en" onclick="setLang('en')">EN</button>
+  <button class="lang-btn active" id="btn-uk">UA</button>
+  <button class="lang-btn"        id="btn-en">EN</button>
 </div>
 
 <div class="wrapper">
 
-  <!-- LEFT ADS -->
   <div class="sidebar">
-    <div class="ad" id="ad-left"><!-- MONETAG SLOT --></div>
+    <div class="sidebar-sticky">
+      <div class="ad" id="ad-left">
+        </div>
+    </div>
   </div>
 
-  <!-- RIGHT ADS (має бути ДО content у float-layout) -->
-  <div class="sidebar right">
-    <div class="ad" id="ad-right"><!-- MONETAG SLOT --></div>
-  </div>
-
-  <!-- CONTENT -->
   <div class="content">
 
     <h1 id="js-hero"></h1>
@@ -38,7 +33,6 @@
     <div class="card">
       <p id="js-before-video" style="margin:0 0 10px;color:#bbb;font-size:14px;"></p>
 
-      <!-- FACEBOOK POST MOCK -->
       <div class="fb-post-mock">
         <div class="fb-post-header">
           <div class="fb-author-info">
@@ -76,28 +70,31 @@
       </div>
     </div>
 
-    <!-- DONATE -->
     <div class="card">
       <h3 id="js-donate-heading"></h3>
       <p id="js-donate-text" style="white-space:pre-line;font-size:14px;line-height:1.7;"></p>
       <a class="btn" id="js-donate-btn" href="https://donatello.to/yourpage" target="_blank">💰 </a>
     </div>
 
-    <!-- MONETIZATION -->
     <div class="card">
       <h3 id="js-ads-heading"></h3>
       <p id="js-ads-text" style="white-space:pre-line;font-size:14px;line-height:1.7;"></p>
     </div>
 
-    <!-- NEXT CTA -->
     <p class="next-cta" id="js-next"></p>
 
   </div>
 
+  <div class="sidebar">
+    <div class="sidebar-sticky">
+      <div class="ad" id="ad-right">
+        </div>
+    </div>
+  </div>
+
 </div>
 
-<!-- MOBILE STICKY -->
-<div class="sticky" id="js-sticky"><!-- MONETAG SLOT --></div>
+<div class="sticky" id="js-sticky"></div>
 
 <script src="main.js"></script>
 </body>
