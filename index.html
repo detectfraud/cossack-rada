@@ -6,7 +6,6 @@
   <title>Козацький серіал</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <!-- LANG SWITCHER -->
@@ -20,6 +19,11 @@
   <!-- LEFT ADS -->
   <div class="sidebar">
     <div class="ad" id="ad-left"><!-- MONETAG SLOT --></div>
+  </div>
+
+  <!-- RIGHT ADS (має бути ДО content у float-layout) -->
+  <div class="sidebar right">
+    <div class="ad" id="ad-right"><!-- MONETAG SLOT --></div>
   </div>
 
   <!-- CONTENT -->
@@ -36,18 +40,13 @@
 
       <!-- FACEBOOK POST MOCK -->
       <div class="fb-post-mock">
-
         <div class="fb-post-header">
-
           <div class="fb-author-info">
             <a class="fb-author-name" id="js-author-name" href="#" target="_blank"></a>
             <span class="fb-post-date" id="js-post-date"></span>
           </div>
-
         </div>
-
         <p class="fb-post-text" id="js-post-text"></p>
-
         <div class="fb-video">
           <iframe
             src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3D1254517756765246&show_text=0&width=700&appId=1315606777335941"
@@ -60,22 +59,20 @@
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
           </iframe>
         </div>
-
-<div class="fb-stats">
-  <span class="fb-stat">
-    <img src="hand.png" width="16" height="16" alt="Лайки">
-    <span id="js-likes"></span>
-  </span>
-  <span class="fb-stat">
-    <img src="spread.png" width="16" height="16" alt="Коментарі">
-    <span id="js-comments"></span>
-  </span>
-  <span class="fb-stat">
-    <img src="comment.png" width="16" height="16" alt="Поширення">
-    <span id="js-shares"></span>
-  </span>
-</div>
-
+        <div class="fb-stats">
+          <span class="fb-stat">
+            <img src="hand.png" width="16" height="16" alt="Лайки">
+            <span id="js-likes"></span>
+          </span>
+          <span class="fb-stat">
+            <img src="spread.png" width="16" height="16" alt="Коментарі">
+            <span id="js-comments"></span>
+          </span>
+          <span class="fb-stat">
+            <img src="comment.png" width="16" height="16" alt="Поширення">
+            <span id="js-shares"></span>
+          </span>
+        </div>
       </div>
     </div>
 
@@ -97,18 +94,11 @@
 
   </div>
 
-  <!-- RIGHT ADS -->
-  <div class="sidebar">
-    <div class="ad" id="ad-right"><!-- MONETAG SLOT --></div>
-  </div>
-
 </div>
 
 <!-- MOBILE STICKY -->
 <div class="sticky" id="js-sticky"><!-- MONETAG SLOT --></div>
 
-<!-- SCRIPTS: порядок важливий -->
 <script src="main.js"></script>
-
 </body>
 </html>
