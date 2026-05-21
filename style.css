@@ -37,12 +37,14 @@ body {
 .wrapper {
   display: grid;
   grid-template-columns: 160px 1fr 160px;
+  grid-template-areas: "left center right";
   max-width: 1200px;
   margin: 0 auto;
   gap: 10px;
 }
 
 .sidebar {
+  grid-area: left;
   padding: 10px;
   position: sticky;
   top: 0;
@@ -51,10 +53,11 @@ body {
 }
 
 .sidebar.right {
-  /* нічого додаткового не треба */
+  grid-area: right;
 }
 
 .content {
+  grid-area: center;
   padding: 20px;
   padding-top: 50px;
   min-width: 0;
