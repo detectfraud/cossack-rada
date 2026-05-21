@@ -12,12 +12,13 @@ body {
 
 /* ===== LANG SWITCHER ===== */
 .lang-switcher {
-  position: fixed;
-  top: 12px;
-  right: 16px;
+  position: sticky;
+  top: 10px;
   z-index: 1000;
   display: flex;
   gap: 6px;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 .lang-btn {
   padding: 5px 10px;
@@ -35,32 +36,29 @@ body {
 
 /* ===== LAYOUT ===== */
 .wrapper {
-  display: grid;
-  grid-template-columns: 160px 1fr 160px;
-  grid-template-areas: "left center right";
+  display: flex;
   max-width: 1200px;
   margin: 0 auto;
-  gap: 10px;
+  align-items: flex-start;
 }
 
 .sidebar {
-  grid-area: left;
+  width: 160px;
+  flex-shrink: 0;
   padding: 10px;
   position: sticky;
-  top: 0;
-  align-self: start;
-  height: 100vh;
+  top: 10px;
 }
 
 .sidebar.right {
-  grid-area: right;
+  /* те саме що лівий */
 }
 
 .content {
-  grid-area: center;
+  flex: 1;
+  min-width: 0;
   padding: 20px;
   padding-top: 50px;
-  min-width: 0;
 }
 
 /* ===== AD SLOTS ===== */
