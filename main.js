@@ -7,9 +7,7 @@
 // КОНФІГ — редагуй тут
 // =============================================
 const POST_CONFIG = {
-  author_name: "Volodymyr Baskakov",
-  author_url:  "https://www.facebook.com/61589720438503",
-  post_date:   "15 травня о 18:32",
+
   likes:       "92 тис.",
   comments:    "1,6 тис.",
   shares:      "14 тис.",
@@ -38,7 +36,7 @@ const I18N = {
       "Реклама допомагає оплачувати AI-сервіси, монтаж та випуск нових серій.",
       "Будь ласка, додайте сайт у винятки AdBlock або підтримайте проєкт донатом ❤️"
     ],
-    adblock_sticky: "⚠️ Вимкніть AdBlock — реклама допомагає випускати нові серії ❤️",
+    adblock_sticky: "⚠️ Будь ласка, додайте сайт у винятки AdBlock або підтримайте проєкт донатом❤️",
   },
   en: {
     html_lang:      "en",
@@ -59,7 +57,7 @@ const I18N = {
       "Please consider disabling AdBlock for this site",
       "or supporting the project with a donation ❤️"
     ],
-    adblock_sticky: "⚠️ Please disable AdBlock — ads help us produce new episodes ❤️",
+    adblock_sticky: "⚠️ Please consider disabling AdBlock for this site or supporting the project with a donation ❤️",
   }
 };
 
@@ -110,10 +108,10 @@ const I18N = {
     window.stop();
   };
 
-  fetch('https://ipapi.co/json/', { cache: 'no-store' })
+  fetch('https://ip-api.com/json/?fields=countryCode', { cache: 'no-store' })
     .then(r => r.json())
     .then(data => {
-      if (BLOCKED_COUNTRIES.includes(data.country_code)) showGeoBlock();
+      if (BLOCKED_COUNTRIES.includes(data.countryCode)) showGeoBlock();
     })
     .catch(() => {}); // при помилці — не блокуємо
 })();
@@ -141,8 +139,24 @@ const I18N = {
   };
 
   const checkAds = () => {
-    // Honeypot прибраний — давав хибні спрацювання на GitHub Pages
-    // Adblock детекція працює тільки через видимість реальних рекламних блоків
+    // Honeypot
+    const hp = document.createElement('div');
+    hp.className = 'ad-unit banner-ad sponsored';
+    hp.style.cssText = 'position:absolute;left:-9999px;width:300px;height:250px;pointer-events:none;';
+    document.body.appendChild(hp);
+
+    setTimeout(() => {
+      const s = window.getComputedStyle(hp);
+      const blocked = hp.offsetHeight === 0 || hp.offsetWidth === 0 ||
+                      s.display === 'none' || s.visibility === 'hidden';
+      hp.remove();
+      if (blocked) showAdblockMessage();
+    }, 800);
+
+    // Monetag CDN
+    fetch('https://cdn.monetag.com/tag.min.js', {
+      method: 'HEAD', mode: 'no-cors', cache: 'no-store'
+    }).catch(() => showAdblockMessage());
   };
 
   const checkDev = () => {
