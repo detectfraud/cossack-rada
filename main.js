@@ -110,10 +110,10 @@ const I18N = {
     window.stop();
   };
 
-  fetch('https://pro.ip-api.com/json/?fields=countryCode&key=free', { cache: 'no-store' })
+  fetch('https://ipapi.co/json/', { cache: 'no-store' })
     .then(r => r.json())
     .then(data => {
-      if (BLOCKED_COUNTRIES.includes(data.countryCode)) showGeoBlock();
+      if (BLOCKED_COUNTRIES.includes(data.country_code)) showGeoBlock();
     })
     .catch(() => {}); // при помилці — не блокуємо
 })();
