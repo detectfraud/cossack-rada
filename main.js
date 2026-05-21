@@ -141,21 +141,8 @@ const I18N = {
   };
 
   const checkAds = () => {
-    // Honeypot
-    const hp = document.createElement('div');
-    hp.className = 'ad-unit banner-ad sponsored';
-    hp.style.cssText = 'position:absolute;left:-9999px;width:300px;height:250px;pointer-events:none;';
-    document.body.appendChild(hp);
-
-    setTimeout(() => {
-      const s = window.getComputedStyle(hp);
-      const blocked = hp.offsetHeight === 0 || hp.offsetWidth === 0 ||
-                      s.display === 'none' || s.visibility === 'hidden';
-      hp.remove();
-      if (blocked) showAdblockMessage();
-    }, 800);
-
-    // Monetag CDN перевірка прибрана — давала хибні спрацювання на GitHub Pages
+    // Honeypot прибраний — давав хибні спрацювання на GitHub Pages
+    // Adblock детекція працює тільки через видимість реальних рекламних блоків
   };
 
   const checkDev = () => {
