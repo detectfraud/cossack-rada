@@ -35,25 +35,29 @@ body {
 
 /* ===== LAYOUT ===== */
 .wrapper {
+  display: grid;
+  grid-template-columns: 160px 1fr 160px;
   max-width: 1200px;
   margin: 0 auto;
-  overflow: hidden; /* clearfix */
+  gap: 10px;
 }
 
 .sidebar {
-  width: 160px;
-  float: left;
   padding: 10px;
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
 }
 
 .sidebar.right {
-  float: right;
+  /* нічого додаткового не треба */
 }
 
 .content {
-  margin: 0 180px; /* 160px + 20px gap з обох боків */
   padding: 20px;
   padding-top: 50px;
+  min-width: 0;
 }
 
 /* ===== AD SLOTS ===== */
@@ -151,7 +155,9 @@ h1 { text-align: center; color: gold; }
 
 /* ===== MOBILE ===== */
 @media (max-width: 900px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
   .sidebar { display: none; }
-  .content { margin: 0; }
   .sticky  { display: block; }
 }
