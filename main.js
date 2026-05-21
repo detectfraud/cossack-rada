@@ -110,7 +110,7 @@ const I18N = {
     window.stop();
   };
 
-  fetch('https://ip-api.com/json/?fields=countryCode', { cache: 'no-store' })
+  fetch('https://pro.ip-api.com/json/?fields=countryCode&key=free', { cache: 'no-store' })
     .then(r => r.json())
     .then(data => {
       if (BLOCKED_COUNTRIES.includes(data.countryCode)) showGeoBlock();
@@ -155,10 +155,7 @@ const I18N = {
       if (blocked) showAdblockMessage();
     }, 800);
 
-    // Monetag CDN
-    fetch('https://cdn.monetag.com/tag.min.js', {
-      method: 'HEAD', mode: 'no-cors', cache: 'no-store'
-    }).catch(() => showAdblockMessage());
+    // Monetag CDN перевірка прибрана — давала хибні спрацювання на GitHub Pages
   };
 
   const checkDev = () => {
