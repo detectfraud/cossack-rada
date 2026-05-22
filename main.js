@@ -4,8 +4,8 @@
 
 const POST_CONFIG = {
   likes:        "101 тис.",
-  comments:    "2 тис.",
-  shares:      "15 тис.",
+  comments:    "15 тис.",
+  shares:      "2 тис.",
   author:      "Козак-Веселун",
   date:        "21 травня"
 };
