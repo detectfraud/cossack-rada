@@ -23,7 +23,7 @@ const I18N = {
     ads_heading:    "📢 Монетизація",
     ads_text:       "Реклама допомагає випускати нові серії та підтримувати проєкт.\nДякуємо за підтримку ❤️",
     next:           "Нові серії вже готуються 👀",
-    post_text:      "Поширюйте цей ролик по всьому світу.\n«Ви навіть не уявляєте, как цей короткий ролик розхитує фундамент \"імперії зла\". Кожен ваш лайк, поширення чи коментар — навіть жовчний вигук ворога — це та сама крапля, що точить їхнє гниле корито, коли воно переповниться, то піде на дно так само впевнено й безславно, як їхній флагман \"Москва\". Ваша активність — це зброя, що наближає фінальне занурення»",
+    post_text:      "Поширюйте цей ролик по всьому світу.\n«Ви навіть не уявляєте, как цей короткий ролик розхитує фундамент \"імперії зла\". Кожен ваш лайк, поширення чи коментар — навіть жовчний вигук ворога — це та сама крапля, що точить ихнє гниле корито, коли воно переповниться, то піде на дно так само впевнено й безславно, як їхній флагман \"Москва\". Ваша активність — це зброя, що наближає фінальне занурення»",
     adblock_lines:  [
       "⚠️ Схоже, у вас увімкнений блокувальник реклами.",
       "Ми створюємо цей серіал <strong>власним коштом</strong>.",
@@ -55,6 +55,8 @@ const I18N = {
   }
 };
 
+window._isAdblockDetected = false; // Глобальний прапорець стану адблоку
+
 // =============================================
 // IP БЛОКУВАННЯ — РФ та Білорусь
 // =============================================
@@ -79,7 +81,7 @@ const I18N = {
 })();
 
 // =============================================
-// ADBLOCK DETECTOR (ФІНАЛЬНА СТАБІЛЬНА ВЕРСІЯ V3)
+// ADBLOCK DETECTOR 
 // =============================================
 (function () {
   const isDebug = window.location.hash === "#test";
@@ -87,45 +89,29 @@ const I18N = {
   if (isDebug || isBoss) return;
 
   const showAdblockMessage = () => {
-    // 1. Пробуємо взяти переклад
+    window._isAdblockDetected = true; // Запам'ятовуємо, що адблок є
     const lang = window._currentLang || 'uk';
     const t = I18N[lang] || I18N['uk'];
-    
-    let lines = '';
-    
-    // Перевіряємо, чи існує масив рядків у перекладах
-    if (t && t.adblock_lines && Array.isArray(t.adblock_lines)) {
-      lines = t.adblock_lines.map(l => `<p>${l}</p>`).join('');
-    } else {
-      // ЗАПАСНИЙ ТЕКСТ (якщо мовна система з якихось причин збоїть)
-      lines = `
-        <p>Козаче, AdBlock увімкнено!</p>
-        <p>Реклама допомагає нам оплачувати AI-сервіси та монтаж серій.</p>
-        <p>Будь ласка, вимкни блокувальник або підтримай проєкт донатом.</p>
-      `;
-    }
+    const lines = t.adblock_lines.map(l => `<p>${l}</p>`).join('');
 
-    const myAdSelectors = '.left-ad-sidebar, .right-ad-sidebar, .bottom-monetization-box';
-
-    document.querySelectorAll(myAdSelectors).forEach(el => {
+    // Б'ємо точно по твоїх рідних класах .ad з HTML
+    document.querySelectorAll('.ad').forEach(el => {
       el.innerHTML = `<div class="adblock-msg"><span class="adblock-icon">⚠️</span>${lines}</div>`;
     });
     
     const stickyEl = document.getElementById('js-sticky');
     if (stickyEl) {
-      const stickyText = t && t.adblock_sticky ? t.adblock_sticky : 'Вимкніть AdBlock для підтримки сайту';
-      stickyEl.innerHTML = `<div class="adblock-msg adblock-msg--sticky">${stickyText}</div>`;
+      stickyEl.innerHTML = `<div class="adblock-msg adblock-msg--sticky">${t.adblock_sticky}</div>`;
+      stickyEl.style.display = 'block';
     }
   };
 
   const checkAds = () => {
-    // Пастка для адблоку
     const bait = document.createElement('div');
     bait.className = 'pub_300x250 pub_300x250m wp-adv-contract text-ad adsbox ad-unit doubleclick-adv';
     bait.style.cssText = 'position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; pointer-events:none;';
     document.body.appendChild(bait);
 
-    // Збільшуємо затримку до 800мс для повної готовності DOM на GitHub Pages
     setTimeout(() => {
       const styles = window.getComputedStyle(bait);
       const isBlocked = bait.offsetHeight === 0 || 
@@ -141,7 +127,7 @@ const I18N = {
       } else {
         console.log("Адблок не виявлено.");
       }
-    }, 800); // Оптимальний час для завантаження
+    }, 800); 
   };
 
   const checkDev = () => {
@@ -162,6 +148,7 @@ const I18N = {
   
   document.addEventListener('contextmenu', e => e.preventDefault());
 })();
+
 // =============================================
 // i18n РЕНДЕР
 // =============================================
@@ -184,24 +171,26 @@ function setLang(lang) {
   document.getElementById('js-ads-text').textContent       = t.ads_text;
   document.getElementById('js-next').textContent           = t.next;
 
-  // Повертаємо заповнення лічильників, щоб блоки не пустували
   document.getElementById('js-author-name').textContent    = POST_CONFIG.author;
   document.getElementById('js-post-date').textContent      = POST_CONFIG.date;
   document.getElementById('js-likes').textContent          = POST_CONFIG.likes;
   document.getElementById('js-comments').textContent       = POST_CONFIG.comments;
-  document.getElementById('js-shares').textContent         = POST_CONFIG.shares;
+  document.getElementById('js-shares').textContent          = POST_CONFIG.shares;
 
   document.getElementById('btn-uk').classList.toggle('active', lang === 'uk');
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
 
   window._currentLang = lang;
 
-  const lines = t.adblock_lines.map(l => `<p>${l}</p>`).join('');
-  document.querySelectorAll('.ad .adblock-msg').forEach(el => {
-    el.innerHTML = `<span class="adblock-icon">⚠️</span>${lines}`;
-  });
-  const stickyMsg = document.querySelector('#js-sticky .adblock-msg--sticky');
-  if (stickyMsg) stickyMsg.textContent = t.adblock_sticky;
+  // Оновлюємо переклад сповіщення тільки якщо адблок реально активований
+  if (window._isAdblockDetected) {
+    const lines = t.adblock_lines.map(l => `<p>${l}</p>`).join('');
+    document.querySelectorAll('.ad').forEach(el => {
+      el.innerHTML = `<div class="adblock-msg"><span class="adblock-icon">⚠️</span>${lines}</div>`;
+    });
+    const stickyMsg = document.querySelector('#js-sticky .adblock-msg--sticky');
+    if (stickyMsg) stickyMsg.textContent = t.adblock_sticky;
+  }
 }
 
 // Слухачі подій кнопок
