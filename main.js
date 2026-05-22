@@ -157,7 +157,24 @@ function setLang(lang) {
     if (stickyMsg) stickyMsg.textContent = t.adblock_sticky;
   }
 }
+// =============================================
+// ОБРОБКА КЛІКУ НА ВІДЕО (ПЕРЕНАПРАВЛЕННЯ ТА СТАРТ)
+// =============================================
+document.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('js-video-overlay');
+  const player = document.getElementById('js-youtube-player');
 
+  if (overlay && player) {
+    overlay.addEventListener('click', () => {
+      // Даємо команді плеєра запустити відео автоматично після кліку
+      setTimeout(() => {
+        player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        // Ховаємо прозору кнопку, щоб людина могла далі користуватися паузою на YouTube
+        overlay.style.display = 'none';
+      }, 300);
+    });
+  }
+});
 // Кнопки перемикача мови
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-uk').addEventListener('click', () => setLang('uk'));
