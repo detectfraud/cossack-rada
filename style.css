@@ -33,7 +33,7 @@ body {
 .lang-btn:hover { border-color: gold; color: gold; }
 .lang-btn.active { background: gold; color: #000; border-color: gold; }
 
-/* ===== LAYOUT (Оновлено під Flexbox та липкі блоки) ===== */
+/* ===== LAYOUT ===== */
 .wrapper {
   max-width: 1200px;
   margin: 0 auto;
@@ -42,16 +42,15 @@ body {
 }
 
 .sidebar {
-  width: 180px; /* Трохи ширше для адаптивних банерів */
+  width: 180px; 
   padding: 10px;
   flex-shrink: 0;
 }
 
-/* Внутрішній контейнер для ефекту залипання реклами */
 .sidebar-sticky {
   position: -webkit-sticky;
   position: sticky;
-  top: 20px; /* Фіксація за 20px від верхнього краю екрана при скролі */
+  top: 20px;
 }
 
 .content {
@@ -61,7 +60,7 @@ body {
   padding-top: 50px;
 }
 
-/* ===== AD SLOTS (Адаптовані під гнучкі банери) ===== */
+/* ===== AD SLOTS ===== */
 .ad {
   background: #1e1e1e;
   border-radius: 10px;
@@ -85,6 +84,7 @@ body {
   gap: 8px;
   padding: 12px;
   text-align: center;
+  width: 100%;
 }
 .adblock-msg .adblock-icon { font-size: 24px; }
 .adblock-msg p { margin: 0; font-size: 11px; line-height: 1.5; color: #aaa; }
@@ -129,11 +129,11 @@ h1 { text-align: center; color: gold; }
 }
 .fb-stat { display: flex; align-items: center; gap: 5px; font-size: 13px; color: #8a8d91; }
 
-/* ===== YOUTUBE VIDEO АДАПТИВНИЙ ===== */
+/* ===== YOUTUBE VIDEO ===== */
 .video-container { 
   width: 100%; 
   position: relative;
-  padding-bottom: 56.25%; /* Ідеально під пропорцію відео 16:9 */
+  padding-bottom: 56.25%;
   height: 0;
   overflow: hidden; 
 }
@@ -168,11 +168,11 @@ h1 { text-align: center; color: gold; }
   border-top: 1px solid #333;
   z-index: 999;
 }
-.right-ad-sidebar, .left-ad-sidebar { display: block; }
+
 /* ===== MOBILE ===== */
 @media (max-width: 900px) {
   .wrapper { display: block; }
   .sidebar { display: none; }
   .content { margin: 0; max-width: 100%; }
-  .sticky  { display: none; }
+  .sticky  { display: none !important; }
 }
