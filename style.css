@@ -168,9 +168,7 @@ h1 { text-align: center; color: gold; }
   border-top: 1px solid #333;
   z-index: 999;
 }
-.sidebar {
-    display: none; 
-}
+.right-ad-sidebar, .left-ad-sidebar { display: block; }
 /* ===== MOBILE ===== */
 @media (max-width: 900px) {
   .wrapper { display: block; }
