@@ -79,7 +79,7 @@ const I18N = {
 })();
 
 // =============================================
-// ADBLOCK DETECTOR (ПОВНА СТАБІЛЬНА ВЕРСІЯ)
+// ADBLOCK DETECTOR (ПОВНА СТАБІЛЬНА ВЕРСІЯ V2)
 // =============================================
 (function () {
   const isDebug = window.location.hash === "#test";
@@ -91,7 +91,6 @@ const I18N = {
     const t = I18N[lang] || I18N['uk'];
     const lines = t.adblock_lines.map(l => `<p>${l}</p>`).join('');
 
-    // Чітко б'ємо по твоїх трьох блоках на сторінці
     const myAdSelectors = '.left-ad-sidebar, .right-ad-sidebar, .bottom-monetization-box';
 
     document.querySelectorAll(myAdSelectors).forEach(el => {
@@ -103,19 +102,29 @@ const I18N = {
   };
 
   const checkAds = () => {
-    // Надійна перевірка через домен Google Ads, який адблокери ріжуть миттєво
-    const testUrl = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-    
-    fetch(testUrl, { method: 'HEAD', mode: 'no-cors', cache: 'no-store' })
-      .then(() => {
-        // Успішно завантажилось -> Адблока немає, все чисто
-        console.log("Рекламу дозволено. Дякуємо за підтримку!");
-      })
-      .catch(() => {
-        // Мережа заблокувала запит -> Адблок 100% увімкнено
-        console.warn("Адблок виявлено мережевим фільтром.");
+    // Створюємо тестову пастку для адблоку з найбільш "тригерними" класами
+    const bait = document.createElement('div');
+    bait.className = 'pub_300x250 pub_300x250m wp-adv-contract text-ad adsbox ad-unit doubleclick-adv';
+    bait.style.cssText = 'position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; pointer-events:none;';
+    document.body.appendChild(bait);
+
+    // Даємо браузеру 300мс повністю розгорнути DOM
+    setTimeout(() => {
+      const styles = window.getComputedStyle(bait);
+      const isBlocked = bait.offsetHeight === 0 || 
+                        bait.offsetWidth === 0 || 
+                        styles.display === 'none' || 
+                        styles.visibility === 'hidden';
+      
+      bait.remove();
+
+      if (isBlocked) {
+        console.warn("Адблок виявлено через локальну пастку.");
         showAdblockMessage();
-      });
+      } else {
+        console.log("Адблок не виявлено.");
+      }
+    }, 300);
   };
 
   const checkDev = () => {
