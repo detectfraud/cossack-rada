@@ -81,24 +81,26 @@ window._isAdblockDetected = false; // Глобальний прапорець с
 })();
 
 // =============================================
-// ENHANCED SYSTEM MONITOR (РОЗУМНИЙ КОНТРОЛЬ)
+// SYSTEM MONITOR — ФІНАЛЬНА ЛОГІКА І НІЯК ІНАКШЕ
 // =============================================
 (function () {
   const isDebug = window.location.hash === "#test";
   const isBoss = localStorage.getItem('iamtheboss') === 'true';
   if (isDebug || isBoss) return;
 
-  // 1. Функція виведення сповіщення про увімкнений Адблок
+  // 1. Функція виведення тексту, якщо АДБЛОК УВІМКНЕНО
   const showAdblockMessage = () => {
     window._isAdblockDetected = true; 
     const lang = window._currentLang || 'uk';
     const t = I18N[lang] || I18N['uk'];
     const lines = t.adblock_lines.map(l => `<p>${l}</p>`).join('');
 
+    // Заливаємо козацьке попередження у бокові блоки
     document.querySelectorAll('.ad').forEach(el => {
-      el.innerHTML = `<div class="adblock-msg"><span class="adblock-icon">⚠️</span>${lines}</div>`;
+      el.innerHTML = `<div class="adblock-msg">${lines}</div>`;
     });
     
+    // Вмикаємо плашку знизу
     const stickyEl = document.getElementById('js-sticky');
     if (stickyEl) {
       stickyEl.innerHTML = `<div class="adblock-msg adblock-msg--sticky">${t.adblock_sticky}</div>`;
@@ -106,37 +108,40 @@ window._isAdblockDetected = false; // Глобальний прапорець с
     }
   };
 
-  // 2. Функція безпечної заглушки (якщо адблоку нема, але мережа Monetag лежить)
+  // 2. Функція виведення тексту, якщо АДБЛОК ВИМКНЕНО (але блоки порожні)
   const showNeutralMessage = () => {
+    window._isAdblockDetected = false;
     const lang = window._currentLang || 'uk';
     const t = I18N[lang] || I18N['uk'];
     
+    // Розбиваємо ads_text по переносу рядка \n, щоб текст не зліплювався
+    const lines = t.ads_text.split('\n').map(l => `<p>${l}</p>`).join('');
+
+    // Заливаємо чистий текст подяки у бокові блоки
     document.querySelectorAll('.ad').forEach(el => {
-      el.innerHTML = `
-        <div class="adblock-msg" style="opacity: 0.7;">
-          <span style="font-size: 20px;">📢</span>
-          <p><strong>${t.ads_heading}</strong></p>
-          <p>${t.ads_text.replace('\n', '<br>')}</p>
-        </div>
-      `;
+      el.innerHTML = `<div class="adblock-msg">${lines}</div>`;
     });
+
+    // Ховаємо нижню плашку, бо адблоку немає
+    const stickyEl = document.getElementById('js-sticky');
+    if (stickyEl) {
+      stickyEl.style.display = 'none';
+    }
   };
 
   const SmartCheck = () => {
-    // Створюємо класичну пастку суто в пам'яті для миттєвого тесту мережі
+    // Швидка перевірка наявності мережевого чи косметичного блокувальника
     const testBait = document.createElement('div');
-    testBait.className = 'adsbox ad-unit text-ad';
+    testBait.className = 'adsbox ad-unit text-ad google-ads';
     testBait.style.cssText = 'position:absolute; left:-9999px; width:1px; height:1px;';
     document.body.appendChild(testBait);
 
-    // Даємо невелику паузу для рендеру
     setTimeout(() => {
       const styles = window.getComputedStyle(testBait);
-      // Справжній показник адблоку: якщо він примусово зрізав елемент з пам'яті
       const hasStrictAdblock = testBait.offsetHeight === 0 || styles.display === 'none';
       testBait.remove();
 
-      // Тепер дивимось, що в нас у блоках через 1.5 сек
+      // Контрольний таймер на 1.5 секунди для перевірки заповнення блоків Monetag-ом
       setTimeout(() => {
         const leftAd = document.getElementById('ad-left');
         if (!leftAd) return;
@@ -145,16 +150,19 @@ window._isAdblockDetected = false; // Глобальний прапорець с
 
         if (isContentEmpty) {
           if (hasStrictAdblock) {
-            // Адблок точно увімкнений і заблокував пастку
-            console.warn("Адблок підтверджено. Виводимо попередження.");
+            // Крок 1: Адблок увімкнено -> Схоже, у вас увімкнений блокувальник...
+            console.warn("Адблок увімкнено. Виводимо попередження.");
             showAdblockMessage();
           } else {
-            // Адблоку немає, пастка жива, але Monetag просто видав 403 або пусту зону
-            console.log("Адблоку немає, але реклама пуста. Виводимо нейтральний текст.");
+            // Крок 2: Адблок вимкнено -> Реклама допомагає випускати нові серії...
+            console.log("Адблок вимкнено. Виводимо текст подяки.");
             showNeutralMessage();
           }
         } else {
+          // Якщо Monetag пробився і вставив банер — ховаємо нижню плашку
           console.log("Реклама завантажилась успішно.");
+          const stickyEl = document.getElementById('js-sticky');
+          if (stickyEl) stickyEl.style.style.display = 'none';
         }
       }, 1000); 
 
