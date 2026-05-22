@@ -98,17 +98,15 @@
 
 <script src="main.js"></script>
 
-<!-- Інтеграція Service Worker для Monetag -->
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-      // Вказуємо шлях до головного домену, де лежить sw.js
       navigator.serviceWorker.register('https://detectfraud.github.io/sw.js', { scope: '/cossack-rada/' })
         .then(function(reg) {
           console.log('SW успішно зареєстрований для Monetag. Сфера дії:', reg.scope);
         })
         .catch(function(err) {
-          console.error('Помилка реєстрації SW:', err);
+          console.error('Помилка регистрації SW:', err);
         });
     });
   }
