@@ -169,7 +169,7 @@ h1 { text-align: center; color: gold; }
   z-index: 999;
 }
 .bottom-monetization-box, .right-ad-sidebar, .left-ad-sidebar {
-    display: block; 
+    display: none; 
 }
 /* ===== MOBILE ===== */
 @media (max-width: 900px) {
