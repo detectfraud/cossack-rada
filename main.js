@@ -150,19 +150,16 @@ window._isAdblockDetected = false; // Глобальний прапорець с
 
         if (isContentEmpty) {
           if (hasStrictAdblock) {
-            // Крок 1: Адблок увімкнено -> Схоже, у вас увімкнений блокувальник...
             console.warn("Адблок увімкнено. Виводимо попередження.");
             showAdblockMessage();
           } else {
-            // Крок 2: Адблок вимкнено -> Реклама допомагає випускати нові серії...
             console.log("Адблок вимкнено. Виводимо текст подяки.");
             showNeutralMessage();
           }
         } else {
-          // Якщо Monetag пробився і вставив банер — ховаємо нижню плашку
           console.log("Реклама завантажилась успішно.");
           const stickyEl = document.getElementById('js-sticky');
-          if (stickyEl) stickyEl.style.style.display = 'none';
+          if (stickyEl) stickyEl.style.display = 'none'; // Мікро-фікс тут (прибрано подвійне style)
         }
       }, 1000); 
 
