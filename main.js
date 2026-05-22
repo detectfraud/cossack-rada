@@ -79,46 +79,37 @@ const I18N = {
 })();
 
 // =============================================
-// ADBLOCK DETECTOR (ОНОВЛЕНИЙ)
+// ADBLOCK DETECTOR (ПОВНА СТАБІЛЬНА ВЕРСІЯ)
 // =============================================
 (function () {
-  // 1. Пропускаємо перевірку, якщо є хеш #test або якщо це ти (iamtheboss)
   const isDebug = window.location.hash === "#test";
   const isBoss = localStorage.getItem('iamtheboss') === 'true';
   if (isDebug || isBoss) return;
 
-  // 2. Функція виведення твоїх рідних текстів (зі збереженням мультимовності)
   const showAdblockMessage = () => {
     const lang = window._currentLang || 'uk';
     const t = I18N[lang] || I18N['uk'];
-    
-    // Перебираємо блоки з класом .ad (лівий, правий, низ) і ставимо туди новий гарний текст
-    // Знак ⚠️ або 🪓 можеш міняти прямо тут в коді
     const lines = t.adblock_lines.map(l => `<p>${l}</p>`).join('');
 
-    document.querySelectorAll('.ad').forEach(el => {
-      el.innerHTML = `
-        <div class="adblock-msg">
-          <span class="adblock-icon">🪓</span>
-          ${lines}
-        </div>
-      `;
+    // Чітко б'ємо по твоїх трьох блоках на сторінці
+    const myAdSelectors = '.left-ad-sidebar, .right-ad-sidebar, .bottom-monetization-box';
+
+    document.querySelectorAll(myAdSelectors).forEach(el => {
+      el.innerHTML = `<div class="adblock-msg"><span class="adblock-icon">⚠️</span>${lines}</div>`;
     });
     
-    // Стікі-блок (якщо він є)
     const stickyEl = document.getElementById('js-sticky');
     if (stickyEl) stickyEl.innerHTML = `<div class="adblock-msg adblock-msg--sticky">${t.adblock_sticky}</div>`;
   };
 
-  // 3. НОВА ЗАЛІЗОБЕТОННА ПЕРЕВІРКА МЕРЕЖІ
   const checkAds = () => {
-    // Використовуємо офіційний скрипт Google Ads як лакмусовий папірець
+    // Надійна перевірка через домен Google Ads, який адблокери ріжуть миттєво
     const testUrl = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
     
     fetch(testUrl, { method: 'HEAD', mode: 'no-cors', cache: 'no-store' })
       .then(() => {
-        // Запит пройшов -> Адблоку ТОЧНО немає. Чистимо блоки про всяк випадок
-        console.log("Рекламу дозволено. Дякуємо!");
+        // Успішно завантажилось -> Адблока немає, все чисто
+        console.log("Рекламу дозволено. Дякуємо за підтримку!");
       })
       .catch(() => {
         // Мережа заблокувала запит -> Адблок 100% увімкнено
@@ -127,16 +118,21 @@ const I18N = {
       });
   };
 
-  // 4. Твій захист коду (залишаємо без змін)
   const checkDev = () => {
     window.addEventListener('keydown', (e) => {
       if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73) || (e.ctrlKey && e.shiftKey && e.keyCode === 74) || (e.ctrlKey && e.keyCode === 85)) e.preventDefault();
     });
   };
 
-  // Стартуємо після повного завантаження
-  if (document.readyState === 'complete') { checkAds(); checkDev(); } 
-  else { window.addEventListener('load', () => { checkAds(); checkDev(); }); }
+  if (document.readyState === 'complete') { 
+    checkAds(); 
+    checkDev(); 
+  } else { 
+    window.addEventListener('load', () => { 
+      checkAds(); 
+      checkDev(); 
+    }); 
+  }
   
   document.addEventListener('contextmenu', e => e.preventDefault());
 })();
