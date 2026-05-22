@@ -3,11 +3,11 @@
    ============================================= */
 
 const POST_CONFIG = {
-  likes:        "101 тис.",
-  comments:    "15 тис.",
-  shares:      "2 тис.",
-  author:      "Козак-Веселун",
-  date:        "21 травня"
+  likes:    "101 тис.",
+  comments: "15 тис.",
+  shares:   "2 тис.",
+  author:   "Козак-Веселун",
+  date:     "21 травня"
 };
 
 const I18N = {
@@ -23,14 +23,14 @@ const I18N = {
     ads_heading:    "📢 Монетизація",
     ads_text:       "Реклама допомагає випускати нові серії та підтримувати проєкт.\nДякуємо за підтримку ❤️",
     next:           "Нові серії вже готуються 👀",
-    post_text:      "Поширюйте цей ролик по всьому світу.\n«Ви навіть не уявляєте, как цей короткий ролик розхитує фундамент \"імперії зла\". Кожен ваш лайк, поширення чи коментар — навіть жовчний вигук ворога — це та сама крапля, що точить ихнє гниле корито, коли воно переповниться, то піде на дно так само впевнено й безславно, як їхній флагман \"Москва\". Ваша активність — це зброя, що наближає фінальне занурення»",
+    post_text:      "Поширюйте цей ролик по всьому світу.\n«Ви навіть не уявляєте, як цей короткий ролик розхитує фундамент \"імперії зла\". Кожен ваш лайк, поширення чи коментар — навіть жовчний вигук ворога — це та сама крапля, що точить їхнє гниле корито, коли воно переповниться, то піде на дно так само впевнено й безславно, як їхній флагман \"Москва\". Ваша активність — це зброя, що наближає фінальне занурення»",
     adblock_lines:  [
       "⚠️ Схоже, у вас увімкнений блокувальник реклами.",
       "Ми створюємо цей серіал <strong>власним коштом</strong>.",
       "Реклама допомагає оплачувати AI-сервіси, монтаж та випуск нових серій.",
       "Будь ласка, додайте сайт у винятки AdBlock або підтримайте проєкт донатом ❤️"
     ],
-    adblock_sticky: "⚠️ Будь ласка, додайте сайт у винятки AdBlock або підтримайте проєкт донатом❤️",
+    adblock_sticky: "⚠️ Будь ласка, додайте сайт у винятки AdBlock або підтримайте проєкт донатом ❤️",
   },
   en: {
     html_lang:      "en",
@@ -55,52 +55,29 @@ const I18N = {
   }
 };
 
-window._isAdblockDetected = false; // Глобальний прапорець стану адблоку
+window._isAdblockDetected = false;
 
 // =============================================
-// IP БЛОКУВАННЯ — РФ та Білорусь
-// =============================================
-(function () {
-  const BLOCKED_COUNTRIES = ['RU', 'BY'];
-  const showGeoBlock = () => {
-    document.body.style.overflow = 'hidden';
-    document.body.innerHTML = `
-      <style>
-        @keyframes _spin { to { transform: rotate(360deg); } }
-        ._loader { position: fixed; inset: 0; background: #0a0a0a; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; font-family: Arial, sans-serif; }
-        ._spinner { width: 48px; height: 48px; border: 4px solid #222; border-top-color: #555; border-radius: 50%; animation: _spin 0.9s linear infinite; }
-        ._loader-text { color: #444; font-size: 13px; letter-spacing: 1px; }
-      </style>
-      <div class="_loader"><div class="_spinner"></div><span class="_loader-text">Завантаження...</span></div>`;
-    window.stop();
-  };
-  fetch('https://ip-api.com/json/?fields=countryCode', { cache: 'no-store' })
-    .then(r => r.json())
-    .then(data => { if (BLOCKED_COUNTRIES.includes(data.countryCode)) showGeoBlock(); })
-    .catch(() => {});
-})();
-
-// =============================================
-// SYSTEM MONITOR — ФІНАЛЬНА ЛОГІКА І НІЯК ІНАКШЕ
+// ADBLOCK DETECTOR
+// Логіка: перевіряємо тільки honeypot (CSS-блокування).
+// НЕ перевіряємо чи порожній ad-блок — Monetag завантажується
+// асинхронно і може зайняти довше ніж будь-який таймер.
 // =============================================
 (function () {
   const isDebug = window.location.hash === "#test";
-  const isBoss = localStorage.getItem('iamtheboss') === 'true';
+  const isBoss  = localStorage.getItem('iamtheboss') === 'true';
   if (isDebug || isBoss) return;
 
-  // 1. Функція виведення тексту, якщо АДБЛОК УВІМКНЕНО
   const showAdblockMessage = () => {
-    window._isAdblockDetected = true; 
+    window._isAdblockDetected = true;
     const lang = window._currentLang || 'uk';
-    const t = I18N[lang] || I18N['uk'];
+    const t    = I18N[lang] || I18N['uk'];
     const lines = t.adblock_lines.map(l => `<p>${l}</p>`).join('');
 
-    // Заливаємо козацьке попередження у бокові блоки
     document.querySelectorAll('.ad').forEach(el => {
       el.innerHTML = `<div class="adblock-msg">${lines}</div>`;
     });
-    
-    // Вмикаємо плашку знизу
+
     const stickyEl = document.getElementById('js-sticky');
     if (stickyEl) {
       stickyEl.innerHTML = `<div class="adblock-msg adblock-msg--sticky">${t.adblock_sticky}</div>`;
@@ -108,70 +85,35 @@ window._isAdblockDetected = false; // Глобальний прапорець с
     }
   };
 
-  // 2. Функція виведення тексту, якщо АДБЛОК ВИМКНЕНО (але блоки порожні)
-  const showNeutralMessage = () => {
-    window._isAdblockDetected = false;
-    const lang = window._currentLang || 'uk';
-    const t = I18N[lang] || I18N['uk'];
-    
-    // Розбиваємо ads_text по переносу рядка \n, щоб текст не зліплювався
-    const lines = t.ads_text.split('\n').map(l => `<p>${l}</p>`).join('');
+  const checkAdblock = () => {
+    // Honeypot: елемент з класами які блокує AdBlock
+    const bait = document.createElement('div');
+    bait.className = 'adsbox ad-unit text-ad';
+    bait.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;';
+    document.body.appendChild(bait);
 
-    // Заливаємо чистий текст подяки у бокові блоки
-    document.querySelectorAll('.ad').forEach(el => {
-      el.innerHTML = `<div class="adblock-msg">${lines}</div>`;
-    });
-
-    // Ховаємо нижню плашку, бо адблоку немає
-    const stickyEl = document.getElementById('js-sticky');
-    if (stickyEl) {
-      stickyEl.style.display = 'none';
-    }
-  };
-
-  const SmartCheck = () => {
-    // Швидка перевірка наявності мережевого чи косметичного блокувальника
-    const testBait = document.createElement('div');
-    testBait.className = 'adsbox ad-unit text-ad google-ads';
-    testBait.style.cssText = 'position:absolute; left:-9999px; width:1px; height:1px;';
-    document.body.appendChild(testBait);
-
+    // Чекаємо 300мс щоб CSS-правила AdBlock застосувались
     setTimeout(() => {
-      const styles = window.getComputedStyle(testBait);
-      const hasStrictAdblock = testBait.offsetHeight === 0 || styles.display === 'none';
-      testBait.remove();
+      const s = window.getComputedStyle(bait);
+      const blocked = bait.offsetHeight === 0 ||
+                      bait.offsetWidth  === 0 ||
+                      s.display      === 'none' ||
+                      s.visibility   === 'hidden';
+      bait.remove();
 
-      // Контрольний таймер на 1.5 секунди для перевірки заповнення блоків Monetag-ом
-      setTimeout(() => {
-        const leftAd = document.getElementById('ad-left');
-        if (!leftAd) return;
-
-        const isContentEmpty = leftAd.innerHTML.trim() === "";
-
-        if (isContentEmpty) {
-          if (hasStrictAdblock) {
-            console.warn("Адблок увімкнено. Виводимо попередження.");
-            showAdblockMessage();
-          } else {
-            console.log("Адблок вимкнено. Виводимо текст подяки.");
-            showNeutralMessage();
-          }
-        } else {
-          console.log("Реклама завантажилась успішно.");
-          const stickyEl = document.getElementById('js-sticky');
-          if (stickyEl) stickyEl.style.display = 'none'; // Мікро-фікс тут (прибрано подвійне style)
-        }
-      }, 1000); 
-
+      if (blocked) showAdblockMessage();
+      // Якщо не заблокований — нічого не робимо,
+      // Monetag сам заповнить блоки коли завантажиться
     }, 300);
   };
 
-  if (document.readyState === 'complete') { 
-    SmartCheck(); 
-  } else { 
-    window.addEventListener('load', SmartCheck); 
+  if (document.readyState === 'complete') {
+    checkAdblock();
+  } else {
+    window.addEventListener('load', checkAdblock);
   }
 })();
+
 // =============================================
 // i18n РЕНДЕР
 // =============================================
@@ -194,29 +136,29 @@ function setLang(lang) {
   document.getElementById('js-ads-text').textContent       = t.ads_text;
   document.getElementById('js-next').textContent           = t.next;
 
-  document.getElementById('js-author-name').textContent    = POST_CONFIG.author;
-  document.getElementById('js-post-date').textContent      = POST_CONFIG.date;
-  document.getElementById('js-likes').textContent          = POST_CONFIG.likes;
-  document.getElementById('js-comments').textContent       = POST_CONFIG.comments;
-  document.getElementById('js-shares').textContent          = POST_CONFIG.shares;
+  document.getElementById('js-author-name').textContent = POST_CONFIG.author;
+  document.getElementById('js-post-date').textContent   = POST_CONFIG.date;
+  document.getElementById('js-likes').textContent       = POST_CONFIG.likes;
+  document.getElementById('js-comments').textContent    = POST_CONFIG.comments;
+  document.getElementById('js-shares').textContent      = POST_CONFIG.shares;
 
   document.getElementById('btn-uk').classList.toggle('active', lang === 'uk');
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
 
   window._currentLang = lang;
 
-  // Оновлюємо переклад сповіщення тільки якщо адблок реально активований
+  // Оновлюємо переклад якщо adblock вже показується
   if (window._isAdblockDetected) {
     const lines = t.adblock_lines.map(l => `<p>${l}</p>`).join('');
     document.querySelectorAll('.ad').forEach(el => {
-      el.innerHTML = `<div class="adblock-msg"><span class="adblock-icon">⚠️</span>${lines}</div>`;
+      el.innerHTML = `<div class="adblock-msg">${lines}</div>`;
     });
     const stickyMsg = document.querySelector('#js-sticky .adblock-msg--sticky');
     if (stickyMsg) stickyMsg.textContent = t.adblock_sticky;
   }
 }
 
-// Слухачі подій кнопок
+// Кнопки перемикача мови
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-uk').addEventListener('click', () => setLang('uk'));
   document.getElementById('btn-en').addEventListener('click', () => setLang('en'));
@@ -224,8 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Старт
 (function () {
-  const saved   = localStorage.getItem('lang');
-  const urlLang = new URLSearchParams(window.location.search).get('lng');
+  const saved    = localStorage.getItem('lang');
+  const urlLang  = new URLSearchParams(window.location.search).get('lng');
   const detected = saved || urlLang || 'uk';
   setLang(I18N[detected] ? detected : 'uk');
 })();
