@@ -81,7 +81,7 @@ window._isAdblockDetected = false; // Глобальний прапорець с
 })();
 
 // =============================================
-// ADBLOCK DETECTOR 
+// ADBLOCK DETECTOR (КОНТРОЛЬ ПО ТАЙМЕРУ СТАНУ БЛОКІВ)
 // =============================================
 (function () {
   const isDebug = window.location.hash === "#test";
@@ -89,16 +89,17 @@ window._isAdblockDetected = false; // Глобальний прапорець с
   if (isDebug || isBoss) return;
 
   const showAdblockMessage = () => {
-    window._isAdblockDetected = true; // Запам'ятовуємо, що адблок є
+    window._isAdblockDetected = true; // Запам'ятовуємо стан для системи мов
     const lang = window._currentLang || 'uk';
     const t = I18N[lang] || I18N['uk'];
     const lines = t.adblock_lines.map(l => `<p>${l}</p>`).join('');
 
-    // Б'ємо точно по твоїх рідних класах .ad з HTML
+    // Заливаємо текст у бокові блоки
     document.querySelectorAll('.ad').forEach(el => {
       el.innerHTML = `<div class="adblock-msg"><span class="adblock-icon">⚠️</span>${lines}</div>`;
     });
     
+    // Вмикаємо плашку знизу
     const stickyEl = document.getElementById('js-sticky');
     if (stickyEl) {
       stickyEl.innerHTML = `<div class="adblock-msg adblock-msg--sticky">${t.adblock_sticky}</div>`;
@@ -106,49 +107,34 @@ window._isAdblockDetected = false; // Глобальний прапорець с
     }
   };
 
-  const checkAds = () => {
-    const bait = document.createElement('div');
-    bait.className = 'pub_300x250 pub_300x250m wp-adv-contract text-ad adsbox ad-unit doubleclick-adv';
-    bait.style.cssText = 'position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; pointer-events:none;';
-    document.body.appendChild(bait);
-
+  const checkAdsWithTimer = () => {
+    // Даємо 1.5 секунди (1500мс), щоб реклама або завантажилась, або адблок її заблокував
     setTimeout(() => {
-      const styles = window.getComputedStyle(bait);
-      const isBlocked = bait.offsetHeight === 0 || 
-                        bait.offsetWidth === 0 || 
-                        styles.display === 'none' || 
-                        styles.visibility === 'hidden';
+      // Беремо лівий блок для перевірки вмісту
+      const leftAd = document.getElementById('ad-left');
       
-      bait.remove();
+      // Якщо блоку взагалі немає в HTML (про всяк випадок) — виходимо
+      if (!leftAd) return;
 
-      if (isBlocked) {
-        console.warn("Адблок виявлено через локальну пастку.");
+      // Перевіряємо, чи він порожній. 
+      // trim() прибирає зайві пробіли. Якщо всередині немає тегів від Monetag — значить порожньо.
+      const isEmpty = leftAd.innerHTML.trim() === "";
+
+      if (isEmpty) {
+        console.warn("Контент не завантажився. Вмикаємо сповіщення по таймеру.");
         showAdblockMessage();
       } else {
-        console.log("Адблок не виявлено.");
+        console.log("Блоки заповнені, реклама працює.");
       }
-    }, 800); 
-  };
-
-  const checkDev = () => {
-    window.addEventListener('keydown', (e) => {
-      if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73) || (e.ctrlKey && e.shiftKey && e.keyCode === 74) || (e.ctrlKey && e.keyCode === 85)) e.preventDefault();
-    });
+    }, 1500); // 1.5 секунди очікування — ідеально для локалі та Гітхабу
   };
 
   if (document.readyState === 'complete') { 
-    checkAds(); 
-    checkDev(); 
+    checkAdsWithTimer(); 
   } else { 
-    window.addEventListener('load', () => { 
-      checkAds(); 
-      checkDev(); 
-    }); 
+    window.addEventListener('load', checkAdsWithTimer); 
   }
-  
-  document.addEventListener('contextmenu', e => e.preventDefault());
 })();
-
 // =============================================
 // i18n РЕНДЕР
 // =============================================
