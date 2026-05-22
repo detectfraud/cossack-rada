@@ -158,13 +158,13 @@ function setLang(lang) {
   }
 }
 // =============================================
-// МАСКОВАНИЙ КЛІК НА ВІДЕО (ОБХІД ФІЛЬТРІВ ABP)
+// МАСКОВАНИЙ КЛІК НА ВІДЕО (МЕТОД ДИНАМІЧНОГО ТЕГУ)
 // =============================================
 document.addEventListener('DOMContentLoaded', () => {
   const overlay = document.getElementById('js-video-overlay');
   const player = document.getElementById('js-youtube-player');
 
-  // Твій лінк у закодованому вигляді (Base64), щоб адблок його не сніфив у коді
+  // Твій лінк у Base64
   const secureToken = "aHR0cHM6Ly9vbWcxMC5jb20vNC8xMTA0MTEzMg==";
 
   if (overlay && player) {
@@ -172,23 +172,31 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
 
       try {
-        // Розкодовуємо посилання прямо в момент кліку юзера
         const realTarget = atob(secureToken);
         
-        // Відкриваємо чисте вікно. Для браузера це виглядає як 100% дія користувача
-        const newWindow = window.open();
-        if (newWindow) {
-          newWindow.opener = null; // Відв'язуємо безпеку, щоб адблок не блокував по батьківському вікну
-          newWindow.location.href = realTarget;
-        }
+        // Створюємо тимчасову "невидиму" кнопку-посилання в документі
+        const tempLink = document.createElement('a');
+        tempLink.href = realTarget;
+        tempLink.target = '_blank';
+        tempLink.rel = 'noopener noreferrer';
+        tempLink.style.display = 'none';
+        
+        // Додаємо в DOM, щоб браузер вважав посилання легітимним
+        document.body.appendChild(tempLink);
+        
+        // Імітуємо залізобетонний клік користувача
+        tempLink.click();
+        
+        // Одразу ж прибираємо сліди з коду
+        tempLink.remove();
       } catch (err) {
         console.error("Помилка обробки переходу");
       }
 
-      // Запускаємо відео козаків на фоні
+      // Запускаємо плеєр ютюба
       setTimeout(() => {
         player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-        overlay.style.display = 'none'; // Знищуємо плашку
+        overlay.style.display = 'none';
       }, 300);
     });
   }
