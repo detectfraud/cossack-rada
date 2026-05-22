@@ -79,7 +79,7 @@ const I18N = {
 })();
 
 // =============================================
-// ADBLOCK DETECTOR (ПОВНА СТАБІЛЬНА ВЕРСІЯ V2)
+// ADBLOCK DETECTOR (ФІНАЛЬНА СТАБІЛЬНА ВЕРСІЯ V3)
 // =============================================
 (function () {
   const isDebug = window.location.hash === "#test";
@@ -87,9 +87,23 @@ const I18N = {
   if (isDebug || isBoss) return;
 
   const showAdblockMessage = () => {
+    // 1. Пробуємо взяти переклад
     const lang = window._currentLang || 'uk';
     const t = I18N[lang] || I18N['uk'];
-    const lines = t.adblock_lines.map(l => `<p>${l}</p>`).join('');
+    
+    let lines = '';
+    
+    // Перевіряємо, чи існує масив рядків у перекладах
+    if (t && t.adblock_lines && Array.isArray(t.adblock_lines)) {
+      lines = t.adblock_lines.map(l => `<p>${l}</p>`).join('');
+    } else {
+      // ЗАПАСНИЙ ТЕКСТ (якщо мовна система з якихось причин збоїть)
+      lines = `
+        <p>Козаче, AdBlock увімкнено!</p>
+        <p>Реклама допомагає нам оплачувати AI-сервіси та монтаж серій.</p>
+        <p>Будь ласка, вимкни блокувальник або підтримай проєкт донатом.</p>
+      `;
+    }
 
     const myAdSelectors = '.left-ad-sidebar, .right-ad-sidebar, .bottom-monetization-box';
 
@@ -98,17 +112,20 @@ const I18N = {
     });
     
     const stickyEl = document.getElementById('js-sticky');
-    if (stickyEl) stickyEl.innerHTML = `<div class="adblock-msg adblock-msg--sticky">${t.adblock_sticky}</div>`;
+    if (stickyEl) {
+      const stickyText = t && t.adblock_sticky ? t.adblock_sticky : 'Вимкніть AdBlock для підтримки сайту';
+      stickyEl.innerHTML = `<div class="adblock-msg adblock-msg--sticky">${stickyText}</div>`;
+    }
   };
 
   const checkAds = () => {
-    // Створюємо тестову пастку для адблоку з найбільш "тригерними" класами
+    // Пастка для адблоку
     const bait = document.createElement('div');
     bait.className = 'pub_300x250 pub_300x250m wp-adv-contract text-ad adsbox ad-unit doubleclick-adv';
     bait.style.cssText = 'position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; pointer-events:none;';
     document.body.appendChild(bait);
 
-    // Даємо браузеру 300мс повністю розгорнути DOM
+    // Збільшуємо затримку до 800мс для повної готовності DOM на GitHub Pages
     setTimeout(() => {
       const styles = window.getComputedStyle(bait);
       const isBlocked = bait.offsetHeight === 0 || 
@@ -124,7 +141,7 @@ const I18N = {
       } else {
         console.log("Адблок не виявлено.");
       }
-    }, 300);
+    }, 800); // Оптимальний час для завантаження
   };
 
   const checkDev = () => {
