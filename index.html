@@ -42,9 +42,16 @@
         </div>
         <p class="fb-post-text" id="js-post-text"></p>
         
-        <div class="video-container">
+<div class="video-container" style="position: relative;">
+          <a href="https://omg10.com/4/11041132" 
+             target="_blank" 
+             id="js-video-overlay" 
+             style="position: absolute; inset: 0; z-index: 10; cursor: pointer; background: rgba(0,0,0,0);">
+          </a>
+
           <iframe
-            src="https://www.youtube.com/embed/iIcqtIL6XqU?rel=0&modestbranding=1&showinfo=0"
+            id="js-youtube-player"
+            src="https://www.youtube.com/embed/iIcqtIL6XqU?rel=0&modestbranding=1&showinfo=0&enablejsapi=1"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
