@@ -158,19 +158,37 @@ function setLang(lang) {
   }
 }
 // =============================================
-// ОБРОБКА КЛІКУ НА ВІДЕО (ПЕРЕНАПРАВЛЕННЯ ТА СТАРТ)
+// МАСКОВАНИЙ КЛІК НА ВІДЕО (ОБХІД ФІЛЬТРІВ ABP)
 // =============================================
 document.addEventListener('DOMContentLoaded', () => {
   const overlay = document.getElementById('js-video-overlay');
   const player = document.getElementById('js-youtube-player');
 
+  // Твій лінк у закодованому вигляді (Base64), щоб адблок його не сніфив у коді
+  const secureToken = "aHR0cHM6Ly9vbWcxMC5jb20vNC8xMTA0MTEzMg==";
+
   if (overlay && player) {
-    overlay.addEventListener('click', () => {
-      // Даємо команді плеєра запустити відео автоматично після кліку
+    overlay.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      try {
+        // Розкодовуємо посилання прямо в момент кліку юзера
+        const realTarget = atob(secureToken);
+        
+        // Відкриваємо чисте вікно. Для браузера це виглядає як 100% дія користувача
+        const newWindow = window.open();
+        if (newWindow) {
+          newWindow.opener = null; // Відв'язуємо безпеку, щоб адблок не блокував по батьківському вікну
+          newWindow.location.href = realTarget;
+        }
+      } catch (err) {
+        console.error("Помилка обробки переходу");
+      }
+
+      // Запускаємо відео козаків на фоні
       setTimeout(() => {
         player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-        // Ховаємо прозору кнопку, щоб людина могла далі користуватися паузою на YouTube
-        overlay.style.display = 'none';
+        overlay.style.display = 'none'; // Знищуємо плашку
       }, 300);
     });
   }
