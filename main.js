@@ -158,42 +158,26 @@ function setLang(lang) {
   }
 }
 // =============================================
-// МАСКОВАНИЙ КЛІК НА ВІДЕО (МЕТОД ДИНАМІЧНОГО ТЕГУ)
+// ТРАНЗИТНИЙ ПЕРЕХІД ЧЕРЕЗ GITHUB PAGES
 // =============================================
 document.addEventListener('DOMContentLoaded', () => {
   const overlay = document.getElementById('js-video-overlay');
   const player = document.getElementById('js-youtube-player');
 
-  // Твій лінк у Base64
-  const secureToken = "aHR0cHM6Ly9vbWcxMC5jb20vNC8xMTA0MTEzMg==";
-
   if (overlay && player) {
     overlay.addEventListener('click', (e) => {
       e.preventDefault();
 
-      try {
-        const realTarget = atob(secureToken);
-        
-        // Створюємо тимчасову "невидиму" кнопку-посилання в документі
-        const tempLink = document.createElement('a');
-        tempLink.href = realTarget;
-        tempLink.target = '_blank';
-        tempLink.rel = 'noopener noreferrer';
-        tempLink.style.display = 'none';
-        
-        // Додаємо в DOM, щоб браузер вважав посилання легітимним
-        document.body.appendChild(tempLink);
-        
-        // Імітуємо залізобетонний клік користувача
-        tempLink.click();
-        
-        // Одразу ж прибираємо сліди з коду
-        tempLink.remove();
-      } catch (err) {
-        console.error("Помилка обробки переходу");
+      // Відкриваємо твою чисту транзитну сторінку на GitHub
+      // Зміни шлях, якщо папка або домен відрізняються
+      const transitTarget = "https://detectfraud.github.io/cossack-rada/redirect.html";
+      
+      const newWindow = window.open(transitTarget, '_blank');
+      if (newWindow) {
+        newWindow.opener = null;
       }
 
-      // Запускаємо плеєр ютюба
+      // Запускаємо плеєр козаків
       setTimeout(() => {
         player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
         overlay.style.display = 'none';
