@@ -81,25 +81,24 @@ window._isAdblockDetected = false; // Глобальний прапорець с
 })();
 
 // =============================================
-// ADBLOCK DETECTOR (КОНТРОЛЬ ПО ТАЙМЕРУ СТАНУ БЛОКІВ)
+// ENHANCED SYSTEM MONITOR (РОЗУМНИЙ КОНТРОЛЬ)
 // =============================================
 (function () {
   const isDebug = window.location.hash === "#test";
   const isBoss = localStorage.getItem('iamtheboss') === 'true';
   if (isDebug || isBoss) return;
 
+  // 1. Функція виведення сповіщення про увімкнений Адблок
   const showAdblockMessage = () => {
-    window._isAdblockDetected = true; // Запам'ятовуємо стан для системи мов
+    window._isAdblockDetected = true; 
     const lang = window._currentLang || 'uk';
     const t = I18N[lang] || I18N['uk'];
     const lines = t.adblock_lines.map(l => `<p>${l}</p>`).join('');
 
-    // Заливаємо текст у бокові блоки
     document.querySelectorAll('.ad').forEach(el => {
       el.innerHTML = `<div class="adblock-msg"><span class="adblock-icon">⚠️</span>${lines}</div>`;
     });
     
-    // Вмикаємо плашку знизу
     const stickyEl = document.getElementById('js-sticky');
     if (stickyEl) {
       stickyEl.innerHTML = `<div class="adblock-msg adblock-msg--sticky">${t.adblock_sticky}</div>`;
@@ -107,32 +106,65 @@ window._isAdblockDetected = false; // Глобальний прапорець с
     }
   };
 
-  const checkAdsWithTimer = () => {
-    // Даємо 1.5 секунди (1500мс), щоб реклама або завантажилась, або адблок її заблокував
+  // 2. Функція безпечної заглушки (якщо адблоку нема, але мережа Monetag лежить)
+  const showNeutralMessage = () => {
+    const lang = window._currentLang || 'uk';
+    const t = I18N[lang] || I18N['uk'];
+    
+    document.querySelectorAll('.ad').forEach(el => {
+      el.innerHTML = `
+        <div class="adblock-msg" style="opacity: 0.7;">
+          <span style="font-size: 20px;">📢</span>
+          <p><strong>${t.ads_heading}</strong></p>
+          <p>${t.ads_text.replace('\n', '<br>')}</p>
+        </div>
+      `;
+    });
+  };
+
+  const SmartCheck = () => {
+    // Створюємо класичну пастку суто в пам'яті для миттєвого тесту мережі
+    const testBait = document.createElement('div');
+    testBait.className = 'adsbox ad-unit text-ad';
+    testBait.style.cssText = 'position:absolute; left:-9999px; width:1px; height:1px;';
+    document.body.appendChild(testBait);
+
+    // Даємо невелику паузу для рендеру
     setTimeout(() => {
-      // Беремо лівий блок для перевірки вмісту
-      const leftAd = document.getElementById('ad-left');
-      
-      // Якщо блоку взагалі немає в HTML (про всяк випадок) — виходимо
-      if (!leftAd) return;
+      const styles = window.getComputedStyle(testBait);
+      // Справжній показник адблоку: якщо він примусово зрізав елемент з пам'яті
+      const hasStrictAdblock = testBait.offsetHeight === 0 || styles.display === 'none';
+      testBait.remove();
 
-      // Перевіряємо, чи він порожній. 
-      // trim() прибирає зайві пробіли. Якщо всередині немає тегів від Monetag — значить порожньо.
-      const isEmpty = leftAd.innerHTML.trim() === "";
+      // Тепер дивимось, що в нас у блоках через 1.5 сек
+      setTimeout(() => {
+        const leftAd = document.getElementById('ad-left');
+        if (!leftAd) return;
 
-      if (isEmpty) {
-        console.warn("Контент не завантажився. Вмикаємо сповіщення по таймеру.");
-        showAdblockMessage();
-      } else {
-        console.log("Блоки заповнені, реклама працює.");
-      }
-    }, 1500); // 1.5 секунди очікування — ідеально для локалі та Гітхабу
+        const isContentEmpty = leftAd.innerHTML.trim() === "";
+
+        if (isContentEmpty) {
+          if (hasStrictAdblock) {
+            // Адблок точно увімкнений і заблокував пастку
+            console.warn("Адблок підтверджено. Виводимо попередження.");
+            showAdblockMessage();
+          } else {
+            // Адблоку немає, пастка жива, але Monetag просто видав 403 або пусту зону
+            console.log("Адблоку немає, але реклама пуста. Виводимо нейтральний текст.");
+            showNeutralMessage();
+          }
+        } else {
+          console.log("Реклама завантажилась успішно.");
+        }
+      }, 1000); 
+
+    }, 300);
   };
 
   if (document.readyState === 'complete') { 
-    checkAdsWithTimer(); 
+    SmartCheck(); 
   } else { 
-    window.addEventListener('load', checkAdsWithTimer); 
+    window.addEventListener('load', SmartCheck); 
   }
 })();
 // =============================================
