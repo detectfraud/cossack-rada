@@ -1,11 +1,24 @@
+<!-- 30.05.2026 -->
 <!DOCTYPE html>
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Козацький серіал</title>
+  <script src="check.js"></script>
+  <title>«Козацькі Сміхолики» — Веселі козацькі меми та анімаційний серіал</title>
+  <meta name="description" content="Дивіться кумедні пригоди, жарти та короткі ролики про козаків у сучасному форматі. «Козацькі Сміхолики» — український гумор, народна мудрість та справжній козацький вайб!">
+  <meta name="keywords" content="козацькі сміхолики, козацькі меми, український гумор, козаки анімація, веселі козаки, короткі ролики, український серіал, козацькі пригоди, смішне відео">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="«Козацькі Сміхолики» — Веселі козацькі меми та анімаційний серіал">
+  <meta property="og:description" content="Козаки знову оживають у веселих коротких історіях, пригодах та сучасних мемах. Заходьте та підніміть свій дух 🇺🇦">
+  <meta property="og:url" content="https://detectfraud.github.io/cossack-rada"> 
+  <meta property="og:image" content="https://raw.githubusercontent.com/detectfraud/cossack-test/main/Kozaki.png"> 
+  <meta property="og:site_name" content="Козацькі Сміхолики">
+
+  <link rel="canonical" href="https://detectfraud.github.io/cossack-rada">
   <link rel="stylesheet" href="style.css">
-  <meta name="monetag" content="576250b2e4efbf523b07b865bbe248b0">
 </head>
 <body>
 
@@ -15,13 +28,6 @@
 </div>
 
 <div class="wrapper">
-
-  <div class="sidebar">
-    <div class="sidebar-sticky">
-      <div class="ad" id="ad-left"></div>
-    </div>
-  </div>
-
   <div class="content">
 
     <h1 id="js-hero"></h1>
@@ -34,28 +40,10 @@
       <p id="js-before-video" style="margin:0 0 10px;color:#bbb;font-size:14px;"></p>
 
       <div class="fb-post-mock">
-        <div class="fb-post-header">
-          <div class="fb-author-info">
-            <a class="fb-author-name" id="js-author-name" href="#" target="_blank"></a>
-            <span class="fb-post-date" id="js-post-date"></span>
-          </div>
-        </div>
+
         <p class="fb-post-text" id="js-post-text"></p>
         
-<div class="video-container" style="position: relative;">
-          <div id="js-video-overlay" style="position: absolute; inset: 0; z-index: 10; cursor: pointer; background: rgba(0,0,0,0);"></div>
-
-          <div id="js-thanks-overlay" style="display: none; position: absolute; inset: 0; z-index: 11; background: rgba(15, 15, 15, 0.95); align-items: center; justify-content: center; padding: 20px; text-align: center; border: 2px solid gold; border-radius: inherit;">
-            <div style="color: #fff; font-family: sans-serif;">
-              <h4 style="color: gold; margin: 0 0 10px 0; font-size: 18px;">Дякуємо за допомогу! ❤️</h4>
-              <p style="font-size: 13px; margin: 0 0 15px 0; color: #ccc; line-height: 1.5;">Ти успішно підтримав козацький серіал рекламним переглядом.</p>
-              <div style="background: #222; padding: 8px 15px; border-radius: 6px; display: inline-block; border: 1px solid #444;">
-                <span style="font-size: 11px; color: #888; display: block;">Запрошуємо на наступну серію завтра о:</span>
-                <span id="js-tomorrow-time-thanks" style="font-size: 18px; font-weight: bold; color: gold;">00:00</span>
-              </div>
-            </div>
-          </div>
-
+        <div class="video-container">
           <iframe
             id="js-youtube-player"
             src="https://www.youtube.com/embed/iIcqtIL6XqU?rel=0&modestbranding=1&showinfo=0&enablejsapi=1"
@@ -81,38 +69,51 @@
           </span>
         </div>
       </div>
+    </div>   
+
+    <div class="land-description-section">
+      <h2 id="js-land-title"></h2>
+      <p id="js-land-p1"></p>
+      <p id="js-land-p2"></p>
+      
+      <div id="js-more-content" class="more-content">
+        <p id="js-land-p3"></p>
+        
+        <p id="js-land-cta1" class="cta-lead"></p>
+        <ul class="land-list">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+        
+        <p id="js-land-cta2" class="cta-lead"></p>
+        <ul class="land-list">
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+        
+        <p id="js-land-footer" class="land-footer-text"></p>
+      </div>
+
+      <button id="js-read-more-btn" class="read-more-link"></button>
     </div>
 
-    <div class="card">
-      <h3 id="js-donate-heading"></h3>
-      <p id="js-donate-text" style="white-space:pre-line;font-size:14px;line-height:1.7;"></p>
-      <a class="btn" id="js-donate-btn" href="https://donatello.to/cossack-rada" target="_blank">💰 </a>
+ <div class="card">
+      <h3 id="js-donate-heading" style="margin-top:0;color:gold;"></h3>
+      <p id="js-donate-text" style="font-size:14px;line-height:1.5;color:#ccc;"></p>
+      <div class="donate-wrapper">
+        <a href="https://donatello.to/cossack-rada" class="btn-donatello" id="js-donate-btn" target="_blank"></a>
+      </div>
     </div>
 
-    <div class="card">
-      <h3 id="js-ads-heading"></h3>
-      <p id="js-ads-text" style="white-space:pre-line;font-size:14px;line-height:1.7;"></p>
-    </div>
-
-    <p class="next-cta" id="js-next"></p>
+    <div id="js-next" class="next-cta"></div>
 
   </div>
-
-  <div class="sidebar">
-    <div class="sidebar-sticky">
-      <div class="ad" id="ad-right"></div>
-    </div>
-  </div>
-
 </div>
-
-<div class="sticky" id="js-sticky"></div>
-
- <script>(function(s){s.dataset.zone='11040513',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script> 
-
+<br>
+  <img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fdetectfraud.github.io%2Fcossack-test%2F&label=Visitors&icon=people-fill&color=%23ffda6a&message=&style=flat&tz=Universal" alt="Hits Counter" style="display:block; border-radius:4px;position:fixed; bottom:15px; right:15px; z-index:9999; background:transparent; border:none; padding:0; cursor:pointer; transition:transform 0.2s; display:flex;">
 <script src="main.js"></script>
-
-
-
 </body>
 </html>
