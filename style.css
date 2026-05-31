@@ -1,5 +1,5 @@
 /* =============================================
-   КОЗАЦЬКИЙ СЕРІАЛ — style.css
+   КОЗАЦЬКИЙ СЕРІАЛ — style.css (30.05.2026)
    ============================================= */
 * { box-sizing: border-box; }
 
@@ -35,61 +35,16 @@ body {
 
 /* ===== LAYOUT ===== */
 .wrapper {
-  max-width: 1200px;
+  max-width: 800px;
   margin: 0 auto;
-  display: flex;
-  justify-content: center;
-}
-
-.sidebar {
-  width: 180px; 
-  padding: 10px;
-  flex-shrink: 0;
-}
-
-.sidebar-sticky {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 20px;
+  padding: 0 15px;
 }
 
 .content {
-  flex-grow: 1;
-  max-width: 800px;
-  padding: 20px;
+  width: 100%;
+  padding: 20px 0;
   padding-top: 50px;
 }
-
-/* ===== AD SLOTS ===== */
-.ad {
-  background: #1e1e1e;
-  border-radius: 10px;
-  width: 100%;
-  min-width: 120px;
-  max-width: 160px;
-  min-height: 600px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #777;
-  font-size: 12px;
-  overflow: hidden;
-}
-
-/* ===== ADBLOCK MESSAGE ===== */
-.adblock-msg {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 12px;
-  text-align: center;
-  width: 100%;
-}
-.adblock-msg .adblock-icon { font-size: 24px; }
-.adblock-msg p { margin: 0; font-size: 11px; line-height: 1.5; color: #aaa; }
-.adblock-msg strong { color: gold; }
-.adblock-msg--sticky { font-size: 13px; color: #ccc; padding: 6px; }
 
 /* ===== TYPOGRAPHY ===== */
 h1 { text-align: center; color: gold; }
@@ -146,33 +101,98 @@ h1 { text-align: center; color: gold; }
   border: none; 
 }
 
-/* ===== DONATE BUTTON ===== */
-.btn {
-  display: block; text-align: center;
-  padding: 14px; background: gold;
-  color: black; font-weight: bold;
-  border-radius: 10px; text-decoration: none;
+/* ===== DONATE STRUCTURE ===== */
+.donate-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
 }
+
+/* Оригінальна кнопка Donatello */
+.btn-donatello {
+  display: block; 
+  text-align: center;
+  padding: 14px; 
+  background: gold;
+  color: black; 
+  font-weight: bold;
+  border-radius: 10px; 
+  text-decoration: none;
+  transition: transform 0.1s;
+}
+.btn-donatello:active { transform: scale(0.99); }
 
 /* ===== NEXT CTA ===== */
 .next-cta { text-align: center; font-size: 15px; color: #aaa; padding: 10px 0 4px; }
 
-/* ===== STICKY BOTTOM ===== */
-.sticky {
-  display: none;
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background: #111;
-  padding: 8px;
-  text-align: center;
-  border-top: 1px solid #333;
-  z-index: 999;
+/* Стилізація лендінг-опису під плеєром */
+.land-description-section {
+  margin: 30px 0 15px 0;
+  color: #e0e0e0;
+  line-height: 1.6;
+  text-align: left;
 }
 
-/* ===== MOBILE ===== */
-@media (max-width: 900px) {
-  .wrapper { display: block; }
-  .sidebar { display: none; }
-  .content { margin: 0; max-width: 100%; }
-  .sticky  { display: none !important; }
+.land-description-section h2 {
+  font-size: 24px;
+  color: #ffc107;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.land-description-section p {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+/* Логіка прихованого контенту */
+.more-content { display: none; }
+.more-content.expanded { display: block; }
+
+/* Стиль посилання-кнопки "читати більше" */
+.read-more-link {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 5px 0;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+.read-more-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* Списки переваг */
+.land-list {
+  list-style: none;
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+.land-list li {
+  position: relative;
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+.land-list li::before {
+  content: "•";
+  color: #ffc107;
+  font-weight: bold;
+  position: absolute;
+  left: -15px;
+}
+
+.cta-lead {
+  font-weight: bold;
+  margin-top: 15px;
+  color: #fff;
+}
+
+.land-footer-text {
+  font-style: italic;
+  margin-top: 20px;
+  color: #ffc107;
 }
